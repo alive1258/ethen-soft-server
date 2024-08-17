@@ -1,14 +1,23 @@
-export type UserName = {
+import { Model } from "mongoose";
+
+export type TUserName = {
   firstName: string;
-  middleName: string;
+  middleName?: string | undefined;
   lastName: string;
 };
 
-export type User = {
+export type TUser = {
   id: string;
-  name: UserName;
-  gender: "male" | "female";
+  name: TUserName;
+  password: string;
+  gender: "male" | "female" | "other";
   email: string;
   contactNo: string;
-  profileImage?: string;
+  profileImage?: string | undefined;
+  isDeleted: boolean;
 };
+
+// for crating static
+export interface UserModel extends Model<TUser> {
+  isUserExists(email: string): Promise<TUser | null>;
+}

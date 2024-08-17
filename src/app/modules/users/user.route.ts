@@ -5,7 +5,13 @@ const router = express.Router();
 
 //will call controller function
 router.post("/create-user", UserControllers.createUser);
+
+router.get("/:userId", UserControllers.getSingleUser);
+
+router.delete("/:userId", UserControllers.deleteUser);
+
+router.patch("/:userId", UserControllers.updateUser);
+
 router.get("/", UserControllers.getAllUsers);
-router.get("/:studentId", UserControllers.getSingleUser);
 
 export const UserRoutes = router;
