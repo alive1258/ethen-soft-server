@@ -1,133 +1,94 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import { UserServices } from "./user.service";
-import userValidationSchema from "./user.validation";
+// import userValidationSchema from "./user.validation";
+import sendResponse from "../../utils/sendResponse";
+import httpStatus from "http-status";
+import catchAsync from "../../utils/catchAsync";
 
 // Controller to handle user creation
-const createUser = async (req: Request, res: Response) => {
-  try {
-    const { user: userData } = req.body;
+const createUser = catchAsync(async (req, res) => {
+  const { user: userData } = req.body;
 
-    // Validate the incoming user data using Zod schema
-    const zodParserData = userValidationSchema.parse(userData);
+  // Create a new user in the database using the validated data
+  const result = await UserServices.createUserIntoDB(userData);
 
-    // Create a new user in the database using the validated data
-    const result = await UserServices.createUserIntoDB(zodParserData);
-
-    // Respond with a success message and the created user data
-    res.status(200).json({
-      success: true,
-      message: "User created successfully",
-      data: result,
-    });
-  } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: error.massage || "User creation failed",
-      error: error instanceof Error ? error.message : "Unknown error",
-    });
-  }
-};
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User created successfully",
+    data: result,
+  });
+});
 
 // Controller to handle retrieving all users
-const getAllUsers = async (req: Request, res: Response) => {
-  try {
-    // Retrieve all users from the database
-    const result = await UserServices.getAllUsersFromDB();
+const getAllUsers = catchAsync(async (req, res) => {
+  // Retrieve all users from the database
+  const result = await UserServices.getAllUsersFromDB();
 
-    // Respond with a success message and the retrieved users
-    res.status(200).json({
-      success: true,
-      message: "Users retrieved successfully",
-      data: result,
-    });
-  } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: "Something went wrong",
-      error: error instanceof Error ? error.message : "Unknown error",
-    });
-  }
-};
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Users retrieved successfully",
+    data: result,
+  });
+});
 
 // Controller to handle retrieving a single user by ID
-const getSingleUser = async (req: Request, res: Response) => {
-  try {
-    const { userId } = req.params;
+const getSingleUser = catchAsync(async (req, res) => {
+  const { userId } = req.params;
 
-    // Retrieve a single user from the database by their ID
-    const result = await UserServices.getSingleUserFromDB(userId);
+  // Retrieve a single user from the database by their ID
+  const result = await UserServices.getSingleUserFromDB(userId);
 
-    if (!result) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
-    }
-
-    // Respond with a success message and the retrieved user data
-    res.status(200).json({
-      success: true,
-      message: "Single User retrieved successfully",
-      data: result,
-    });
-  } catch (error: any) {
-    res.status(500).json({
+  if (!result) {
+    return res.status(404).json({
       success: false,
-      message: "Something went wrong",
-      error: error instanceof Error ? error.message : "Unknown error",
+      message: "User not found",
     });
   }
-};
+
+  // Respond with a success message and the retrieved user data
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Single User retrieved successfully",
+    data: result,
+  });
+});
 
 // Controller to handle updating a user by ID
-const updateUser = async (req: Request, res: Response) => {
-  try {
-    const { userId } = req.params;
-    const updateData = req.body;
+const updateUser = catchAsync(async (req, res) => {
+  const { userId } = req.params;
+  const updateData = req.body;
 
-    // Validate the incoming update data using Zod schema (if necessary)
-    // const validatedUpdateData = userUpdateValidationSchema.parse(updateData);
+  // Update the user in the database using the validated data
+  const result = await UserServices.updateUserInDB(userId, updateData);
 
-    // Update the user in the database using the validated data
-    const result = await UserServices.updateUserInDB(userId, updateData);
-
-    // Respond with a success message and the updated user data
-    res.status(200).json({
-      success: true,
-      message: "User updated successfully",
-      data: result,
-    });
-  } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: "Failed to update user",
-      error: error instanceof Error ? error.message : "Unknown error",
-    });
-  }
-};
+  // Respond with a success message and the updated user data
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User updated successfully",
+    data: result,
+  });
+});
 
 // Controller to handle deleting a user by ID
-const deleteUser = async (req: Request, res: Response) => {
-  try {
-    const { userId } = req.params;
+const deleteUser = catchAsync(async (req, res) => {
+  const { userId } = req.params;
 
-    // Delete the user from the database by their ID
-    const result = await UserServices.deleteUserFromDB(userId);
+  // Delete the user from the database by their ID
+  const result = await UserServices.deleteUserFromDB(userId);
 
-    // Respond with a success message and the result of the deletion
-    res.status(200).json({
-      success: true,
-      message: "User deleted successfully",
-      data: result,
-    });
-  } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: "Something went wrong",
-      error: error instanceof Error ? error.message : "Unknown error",
-    });
-  }
-};
+  // Respond with a success message and the result of the deletion
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User deleted successfully",
+    data: result,
+  });
+});
 
 // Export the user controllers as an object for use in other parts of the application
 export const UserControllers = {

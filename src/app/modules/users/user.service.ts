@@ -21,7 +21,7 @@ const createUserIntoDB = async (userData: TUser) => {
 const getAllUsersFromDB = async () => {
   // Find all user documents in the collection
   // const result = await User.find();
-  const result = await User.find().select("-password");
+  const result = await User.find();
   return result;
 };
 

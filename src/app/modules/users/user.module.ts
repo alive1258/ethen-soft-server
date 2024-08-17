@@ -34,6 +34,7 @@ const userSchema = new Schema<TUser, UserModel>(
       type: userNameSchema,
       required: true,
     },
+
     password: {
       type: String,
       required: [true, "password is required"],
@@ -56,6 +57,7 @@ const userSchema = new Schema<TUser, UserModel>(
       default: false, // Soft deletion flag, default is false (not deleted)
     },
   },
+
   {
     toJSON: {
       virtuals: true,

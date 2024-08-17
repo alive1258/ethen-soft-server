@@ -18,17 +18,37 @@ const userNameValidationSchema = z.object({
 });
 
 // Zod schema for User
-const userValidationSchema = z.object({
-  id: z.string(),
-  name: userNameValidationSchema,
-  password: z.string().min(6, "Password is required"),
-  contactNo: z.string().min(1, "Contact number is required"),
-  gender: z.enum(["male", "female", "other"], {
-    errorMap: () => ({ message: "Invalid gender" }),
+const createUserValidationSchema = z.object({
+  body: z.object({
+    id: z.string(),
+    name: userNameValidationSchema,
+    password: z.string().min(6, "Password is required"),
+    contactNo: z.string().min(1, "Contact number is required"),
+    gender: z.enum(["male", "female", "other"], {
+      errorMap: () => ({ message: "Invalid gender" }),
+    }),
+    email: z.string().trim().email("Invalid email format"),
+    profileImage: z.string().optional(),
+    isDeleted: z.boolean(),
   }),
-  email: z.string().trim().email("Invalid email format"),
-  profileImage: z.string().optional(),
-  isDeleted: z.boolean(),
+});
+// Zod schema for User
+const updateUserValidationSchema = z.object({
+  body: z.object({
+    id: z.string(),
+    name: userNameValidationSchema,
+    password: z.string().min(6, "Password is required"),
+    contactNo: z.string().min(1, "Contact number is required"),
+    gender: z.enum(["male", "female", "other"], {
+      errorMap: () => ({ message: "Invalid gender" }),
+    }),
+    email: z.string().trim().email("Invalid email format"),
+    profileImage: z.string().optional(),
+    isDeleted: z.boolean(),
+  }),
 });
 
-export default userValidationSchema;
+export const userValidation = {
+  createUserValidationSchema,
+  updateUserValidationSchema,
+};
