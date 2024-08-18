@@ -81,12 +81,18 @@ const deleteUser = catchAsync(async (req, res) => {
   const result = await UserServices.deleteUserFromDB(userId);
 
   // Respond with a success message and the result of the deletion
+  if (!result) {
+    return res.status(404).json({
+      success: false,
+      message: "user not found",
+    });
+  }
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "User deleted successfully",
-    data: result,
+    data: "",
   });
 });
 

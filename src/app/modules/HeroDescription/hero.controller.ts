@@ -67,12 +67,18 @@ const updateHero = catchAsync(async (req, res) => {
 const deleteHero = catchAsync(async (req, res) => {
   const { heroId } = req.params;
   const result = await HeroServices.deleteHeroFromDB(heroId);
+  if (!result) {
+    return res.status(404).json({
+      success: false,
+      message: "Hero not found",
+    });
+  }
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "Hero deleted successfully",
-    data: result,
+    data: "",
   });
 });
 
