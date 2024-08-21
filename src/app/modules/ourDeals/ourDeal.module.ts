@@ -1,8 +1,8 @@
 import { Schema, model } from "mongoose";
-import { TOurService } from "./ourService.interface";
+import { TOurDeal } from "./ourDeal.interface";
 
-// Define the OurService
-const ourServiceSchema = new Schema<TOurService>(
+// Define the OurDeal
+const ourDealSchema = new Schema<TOurDeal>(
   {
     title: {
       type: String,
@@ -12,16 +12,12 @@ const ourServiceSchema = new Schema<TOurService>(
       type: String,
       required: true,
     },
-    sub_description: {
-      type: String,
-      required: true,
-    },
 
     image: {
       type: String,
       required: true,
     },
-    icon: {
+    deal: {
       type: String,
       required: true,
     },
@@ -35,5 +31,5 @@ const ourServiceSchema = new Schema<TOurService>(
   }
 );
 
-// Create and export the TOurService model based on the defined schema
-export const OurService = model<TOurService>("OurService", ourServiceSchema);
+// Create and export the TOurDeal model based on the defined schema
+export const OurDeal = model<TOurDeal>("OurDeal", ourDealSchema);

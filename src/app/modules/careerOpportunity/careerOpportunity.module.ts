@@ -1,8 +1,8 @@
 import { Schema, model } from "mongoose";
-import { TOurService } from "./ourService.interface";
+import { TCareerOpportunity } from "./careerOpportunity.interface";
 
-// Define the OurService
-const ourServiceSchema = new Schema<TOurService>(
+// Define the CareerOpportunity
+const careerOpportunitySchema = new Schema<TCareerOpportunity>(
   {
     title: {
       type: String,
@@ -21,11 +21,7 @@ const ourServiceSchema = new Schema<TOurService>(
       type: String,
       required: true,
     },
-    icon: {
-      type: String,
-      required: true,
-    },
-    color_code: {
+    position: {
       type: String,
       required: true,
     },
@@ -35,5 +31,8 @@ const ourServiceSchema = new Schema<TOurService>(
   }
 );
 
-// Create and export the TOurService model based on the defined schema
-export const OurService = model<TOurService>("OurService", ourServiceSchema);
+// Create and export the TCareerOpportunity model based on the defined schema
+export const CareerOpportunity = model<TCareerOpportunity>(
+  "CareerOpportunity",
+  careerOpportunitySchema
+);

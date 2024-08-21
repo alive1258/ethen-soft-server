@@ -10,6 +10,17 @@ import { FaqRoutes } from "../modules/faqs/faq.route";
 import { OurServiceRoutes } from "../modules/ourServices/ourService.route";
 import { HomeAboutRoutes } from "../modules/homeAbout/homeAbout.route";
 import { OurWorkRoutes } from "../modules/ourWorks/ourWork.route";
+import { AboutHeroRoutes } from "../modules/aboutHero/aboutHero.route";
+import { CompanyGalleryRoutes } from "../modules/companyGallery/companyGallery.route";
+import { ProfessionalServiceRoutes } from "../modules/professionalServices/professionalService.route";
+import { OurDealRoutes } from "../modules/ourDeals/ourDeal.route";
+import { OurProductRoutes } from "../modules/ourProducts/ourProduct.route";
+import { TeamRoutes } from "../modules/teams/team.route";
+import { JoinUsRoutes } from "../modules/joinUs/joinUs.route";
+import { CareerOpportunityRoutes } from "../modules/careerOpportunity/careerOpportunity.route";
+import { PrivacyPolicyRoutes } from "../modules/privacyPolicy/privacyPolicy.route";
+import { TermsConditionRoutes } from "../modules/termsConditions/termsCondition.route";
+import { BlogRoutes } from "../modules/blogs/blog.route";
 
 const router = Router();
 
@@ -31,7 +42,7 @@ const moduleRoutes = [
     router: OurServiceRoutes,
   },
   {
-    path: "/home-about ",
+    path: "/home-about",
     router: HomeAboutRoutes,
   },
   {
@@ -47,12 +58,57 @@ const moduleRoutes = [
     router: TestimonialRoutes,
   },
   {
+    path: "/blogs",
+    router: BlogRoutes,
+  },
+  {
     path: "/our-clients",
     router: OurClientRoutes,
   },
   {
     path: "/faqs",
     router: FaqRoutes,
+  },
+  {
+    path: "/about-heros",
+    router: AboutHeroRoutes,
+  },
+  {
+    path: "/company-galleries",
+    router: CompanyGalleryRoutes,
+  },
+  {
+    path: "/professional-services",
+    router: ProfessionalServiceRoutes,
+  },
+  {
+    path: "/our-deals",
+    router: OurDealRoutes,
+  },
+
+  {
+    path: "/our-products",
+    router: OurProductRoutes,
+  },
+  {
+    path: "/teams",
+    router: TeamRoutes,
+  },
+  {
+    path: "/join-us",
+    router: JoinUsRoutes,
+  },
+  {
+    path: "/career-opportunities",
+    router: CareerOpportunityRoutes,
+  },
+  {
+    path: "/privacy-policies",
+    router: PrivacyPolicyRoutes,
+  },
+  {
+    path: "/terms-conditions",
+    router: TermsConditionRoutes,
   },
 ];
 

@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Route to create a new Blog
 router.post(
-  "/create-Blog",
+  "/create-blog",
   validateRequest(BlogValidation.createBlogValidationSchema),
   BlogControllers.createBlog
 );

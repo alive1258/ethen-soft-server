@@ -1,8 +1,7 @@
-export type TOurService = {
+export type TCareerOpportunity = {
   title: string;
   sub_description: string;
   description: string;
-  icon: string;
-  color_code: string;
+  position: string;
   image: string;
 };

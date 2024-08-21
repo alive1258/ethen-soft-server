@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Route to create a new HomeAbout
 router.post(
-  "/create-HomeAbout",
+  "/create-home-about",
   validateRequest(HomeAboutValidation.createHomeAboutValidationSchema),
   HomeAboutControllers.createHomeAbout
 );

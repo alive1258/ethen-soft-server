@@ -1,23 +1,24 @@
 import { Schema, model } from "mongoose";
-import { TOurWork } from "./ourWork.interface";
+import { TOurProduct } from "./ourProduct.interface";
 
-// Define the OurWork
-const ourWorkSchema = new Schema<TOurWork>(
+// Define the OurProduct
+const ourProductSchema = new Schema<TOurProduct>(
   {
     title: {
       type: String,
       required: true,
     },
-    description: {
-      type: String,
-      required: true,
-    },
-    sub_description: {
+
+    sub_title: {
       type: String,
       required: true,
     },
 
     image: {
+      type: String,
+      required: true,
+    },
+    description: {
       type: String,
       required: true,
     },
@@ -31,5 +32,5 @@ const ourWorkSchema = new Schema<TOurWork>(
   }
 );
 
-// Create and export the TOurWork model based on the defined schema
-export const OurWork = model<TOurWork>("OurWork", ourWorkSchema);
+// Create and export the TOurProduct model based on the defined schema
+export const OurProduct = model<TOurProduct>("OurProduct", ourProductSchema);

@@ -1,8 +1,7 @@
-export type TOurService = {
+export type TOurDeal = {
   title: string;
-  sub_description: string;
   description: string;
-  icon: string;
+  deal: string;
   color_code: string;
   image: string;
 };

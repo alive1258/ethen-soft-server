@@ -1,8 +1,6 @@
-export type TOurService = {
+export type TJoinUs = {
   title: string;
-  sub_description: string;
   description: string;
-  icon: string;
   color_code: string;
   image: string;
 };

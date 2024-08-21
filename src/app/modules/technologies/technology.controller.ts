@@ -53,6 +53,7 @@ const getSingleTechnology = catchAsync(async (req, res) => {
 const updateTechnology = catchAsync(async (req, res) => {
   const { technologyId } = req.params;
   const updateData = req.body;
+
   const result = await TechServices.updateTechnologyInDB(
     technologyId,
     updateData
