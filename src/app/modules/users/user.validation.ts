@@ -29,7 +29,7 @@ const createUserValidationSchema = z.object({
     }),
     email: z.string().trim().email("Invalid email format"),
     profileImage: z.string().optional(),
-    isDeleted: z.boolean(),
+    isDeleted: z.boolean().optional().default(false),
   }),
 });
 // Zod schema for User
@@ -44,7 +44,7 @@ const updateUserValidationSchema = z.object({
     }),
     email: z.string().trim().email("Invalid email format"),
     profileImage: z.string().optional(),
-    isDeleted: z.boolean(),
+    isDeleted: z.boolean().optional().default(false),
   }),
 });
 

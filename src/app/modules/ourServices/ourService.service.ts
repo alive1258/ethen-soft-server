@@ -15,8 +15,8 @@ const getAllOurServiceFromDB = async () => {
 };
 
 // Service to retrieve a single OurService from the database by ID
-const getSingleOurServiceFromDB = async (_id: string) => {
-  const result = await OurService.findOne({ _id });
+const getSingleOurServiceFromDB = async (slug: string) => {
+  const result = await OurService.findOne({ slug });
   return result;
 };
 

@@ -8,7 +8,7 @@ const router = express.Router();
 
 // Route to create a new OurService
 router.post(
-  "/create-our-Service",
+  "/create-our-service",
   validateRequest(OurServiceValidation.createOurServiceValidationSchema),
   OurServiceControllers.createOurService
 );

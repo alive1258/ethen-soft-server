@@ -8,6 +8,10 @@ const ourServiceSchema = new Schema<TOurService>(
       type: String,
       required: true,
     },
+    slug: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
       required: true,
@@ -28,6 +32,12 @@ const ourServiceSchema = new Schema<TOurService>(
     color_code: {
       type: String,
       required: true,
+    },
+    meta_key: {
+      type: String,
+    },
+    meta_description: {
+      type: String,
     },
   },
   {
