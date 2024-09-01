@@ -1,7 +1,8 @@
 import httpStatus from "http-status";
-import ApiError from "../../errors/ApiError";
+import ApiError from "../../../errors/ApiError";
 import { TCustomer } from "./customer.interface";
 import { Customer } from "./customer.module";
+import { TPaginationOptions } from "../../../interfaces/pagination";
 
 const createCustomerIntoDB = async (
   customer: TCustomer
@@ -22,6 +23,8 @@ const createCustomerIntoDB = async (
 
   return result;
 };
+
+// get all customers
 
 const getSingleCustomerFromDB = async (
   id: string

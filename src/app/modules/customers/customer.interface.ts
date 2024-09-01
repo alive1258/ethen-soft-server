@@ -24,3 +24,11 @@ export type TCustomer = {
 export interface CustomerModel extends Model<TCustomer> {
   isUserExists(id: string): Promise<TCustomer | null>;
 }
+
+// customers filters fields
+export type TCustomerFilters = {
+  searchTerm?: string;
+  name?: string;
+  email?: string;
+  role?: number;
+};
