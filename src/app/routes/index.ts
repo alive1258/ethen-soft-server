@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { UserRoutes } from "../modules/users/user.route";
-
 import { TechnologyRoutes } from "../modules/technologies/technology.route";
 import { HeroRoutes } from "../modules/HeroDescription/hero.route";
 import { TrustUsRoutes } from "../modules/trustUs/trustUs.route";
@@ -21,6 +20,7 @@ import { CareerOpportunityRoutes } from "../modules/careerOpportunity/careerOppo
 import { PrivacyPolicyRoutes } from "../modules/privacyPolicy/privacyPolicy.route";
 import { TermsConditionRoutes } from "../modules/termsConditions/termsCondition.route";
 import { BlogRoutes } from "../modules/blogs/blog.route";
+import { BannerRoutes } from "../modules/banner/banner.route";
 
 const router = Router();
 
@@ -32,6 +32,10 @@ const moduleRoutes = [
   {
     path: "/heros",
     router: HeroRoutes,
+  },
+  {
+    path: "/banner",
+    router: BannerRoutes,
   },
   {
     path: "/technologies",

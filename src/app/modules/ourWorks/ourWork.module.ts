@@ -8,6 +8,10 @@ const ourWorkSchema = new Schema<TOurWork>(
       type: String,
       required: true,
     },
+    slug: {
+      type: String,
+      required: true,
+    },
     type: {
       type: String,
       required: true,
@@ -26,6 +30,14 @@ const ourWorkSchema = new Schema<TOurWork>(
       required: true,
     },
     tech: {
+      type: String,
+      required: true,
+    },
+    meta_description: {
+      type: String,
+      required: true,
+    },
+    meta_key: {
       type: String,
       required: true,
     },

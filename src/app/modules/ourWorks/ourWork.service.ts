@@ -15,8 +15,8 @@ const getAllOurWorkFromDB = async () => {
 };
 
 // Work to retrieve a single OurWork from the database by ID
-const getSingleOurWorkFromDB = async (_id: string) => {
-  const result = await OurWork.findOne({ _id });
+const getSingleOurWorkFromDB = async (slug: string) => {
+  const result = await OurWork.findOne({ slug });
   return result;
 };
 
