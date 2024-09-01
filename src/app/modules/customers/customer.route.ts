@@ -8,7 +8,7 @@ const router = express.Router();
 //create a customer route
 router.post(
   "/create-customer",
-  //   validateRequest(CustomerValidation.createCustomerValidationSchema),
+  validateRequest(CustomerValidation.createCustomerValidationSchema),
   CustomerController.createCustomers
 );
 

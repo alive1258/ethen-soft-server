@@ -8,10 +8,9 @@ import pick from "../../utils/pick";
 import { customerFilterableFilds } from "./customer.constant";
 import { paginationFields } from "../../constants/pagination";
 
+// create customer controller
 const createCustomers = catchAsync(async (req: Request, res: Response) => {
   const customerData = req.body;
-
-  console.log(req.body);
   const result = await CustomerService.createCustomerIntoDB(customerData);
 
   // if (result?._id) {
@@ -31,6 +30,7 @@ const createCustomers = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// get all customers controller
 const getAllCustomers = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, customerFilterableFilds);
   const paginationOptions = pick(req.query, paginationFields);
@@ -48,6 +48,7 @@ const getAllCustomers = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// get single customer controller
 const getSingleCustomer = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await CustomerService.getSingleCustomerFromDB(id);
@@ -60,6 +61,7 @@ const getSingleCustomer = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// update customer controller
 const updateCustomer = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const updatedData = req.body;
@@ -76,6 +78,7 @@ const updateCustomer = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// delete customer controller
 const deleteSingleCustomer = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await CustomerService.deleteCustomerFromDB(id);
