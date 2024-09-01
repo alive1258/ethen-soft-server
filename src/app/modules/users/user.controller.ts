@@ -7,6 +7,7 @@ import catchAsync from "../../utils/catchAsync";
 import pick from "../../utils/pick";
 import { paginationFields } from "../../constants/pagination";
 import { userFilterableFields } from "./user.constant";
+import { OTPVerificationService } from "../OTPVerification/OTPVerification.service";
 
 // Controller to handle user creation
 const createUser = catchAsync(async (req, res) => {
@@ -15,13 +16,22 @@ const createUser = catchAsync(async (req, res) => {
   // Create a new user in the database using the validated data
   const result = await UserServices.createUserIntoDB(userData);
 
-  // Respond with a success message and the retrieved user data
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "User created successfully",
-    data: result,
-  });
+  if (result?._id) {
+    const newResult = await OTPVerificationService.sendOTPVerificationEmail(
+      result._id,
+      result?.email
+    );
+
+    console.log(newResult);
+
+    // Respond with a success message and the retrieved user data
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "User created successfully.",
+      data: newResult,
+    });
+  }
 });
 
 // Controller to handle retrieving all users

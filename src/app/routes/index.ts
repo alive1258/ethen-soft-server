@@ -22,6 +22,7 @@ import { TermsConditionRoutes } from "../modules/termsConditions/termsCondition.
 import { BlogRoutes } from "../modules/blogs/blog.route";
 import { BannerRoutes } from "../modules/banner/banner.route";
 import { CustomerRoutes } from "../modules/customers/customer.route";
+import { OTPVerificationRoute } from "../modules/OTPVerification/OTPVerification.route";
 
 const router = Router();
 
@@ -33,6 +34,10 @@ const moduleRoutes = [
   {
     path: "/customers",
     router: CustomerRoutes,
+  },
+  {
+    path: "/otp",
+    router: OTPVerificationRoute,
   },
   {
     path: "/heros",

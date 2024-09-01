@@ -7,27 +7,28 @@ import httpStatus from "http-status";
 import pick from "../../utils/pick";
 import { customerFilterableFilds } from "./customer.constant";
 import { paginationFields } from "../../constants/pagination";
+import { OTPVerificationService } from "../OTPVerification/OTPVerification.service";
 
 // create customer controller
 const createCustomers = catchAsync(async (req: Request, res: Response) => {
   const customerData = req.body;
+
   const result = await CustomerService.createCustomerIntoDB(customerData);
 
-  // if (result?._id) {
-  //   const data: {
-  //     _id: Types.ObjectId;
-  //     email: string;
-  //   } = { _id: result._id, email: result.email };
-  //   const newResult = await UserOTPVerificationService.sendOTPVerificationEmail(
-  //     data
-  //   );
+  if (result?._id) {
+    const newResult = await OTPVerificationService.sendOTPVerificationEmail(
+      result._id,
+      result?.email
+    );
 
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Customer Created successfully.",
-    data: result,
-  });
+    // Respond with a success message and the retrieved customer data
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Customer Created successfully.",
+      data: newResult,
+    });
+  }
 });
 
 // get all customers controller
