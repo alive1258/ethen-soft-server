@@ -4,9 +4,14 @@ import { CustomerService } from "./customer.service";
 import { Types } from "mongoose";
 import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
+import pick from "../../utils/pick";
+import { customerFilterableFilds } from "./customer.constant";
+import { paginationFields } from "../../constants/pagination";
 
-const createUser = catchAsync(async (req: Request, res: Response) => {
+const createCustomers = catchAsync(async (req: Request, res: Response) => {
   const customerData = req.body;
+
+  console.log(req.body);
   const result = await CustomerService.createCustomerIntoDB(customerData);
 
   // if (result?._id) {
@@ -26,24 +31,24 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-// const getAllUsers = catchAsync(async (req: Request, res: Response) => {
-//   const filters = pick(req.query, userFilterableFilds);
-//   const paginationOptions = pick(req.query, paginationFields);
+const getAllCustomers = catchAsync(async (req: Request, res: Response) => {
+  const filters = pick(req.query, customerFilterableFilds);
+  const paginationOptions = pick(req.query, paginationFields);
 
-//   const result = await UserService.getAllUsersService(
-//     filters,
-//     paginationOptions
-//   );
+  const result = await CustomerService.getAllCusromersFromDB(
+    filters,
+    paginationOptions
+  );
 
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: "All Users received successfully.",
-//     data: result,
-//   });
-// });
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "All customers received successfully.",
+    data: result,
+  });
+});
 
-const getSingleUser = catchAsync(async (req: Request, res: Response) => {
+const getSingleCustomer = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await CustomerService.getSingleCustomerFromDB(id);
 
@@ -55,7 +60,7 @@ const getSingleUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const updateUser = catchAsync(async (req: Request, res: Response) => {
+const updateCustomer = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const updatedData = req.body;
   const result = await CustomerService.updateSingleCustomerFromDB(
@@ -71,7 +76,7 @@ const updateUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const deleteUser = catchAsync(async (req: Request, res: Response) => {
+const deleteSingleCustomer = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await CustomerService.deleteCustomerFromDB(id);
 
@@ -83,10 +88,10 @@ const deleteUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const UserController = {
-  createUser,
-  //   getAllUsers,
-  getSingleUser,
-  updateUser,
-  deleteUser,
+export const CustomerController = {
+  createCustomers,
+  getAllCustomers,
+  getSingleCustomer,
+  updateCustomer,
+  deleteSingleCustomer,
 };

@@ -21,6 +21,7 @@ import { PrivacyPolicyRoutes } from "../modules/privacyPolicy/privacyPolicy.rout
 import { TermsConditionRoutes } from "../modules/termsConditions/termsCondition.route";
 import { BlogRoutes } from "../modules/blogs/blog.route";
 import { BannerRoutes } from "../modules/banner/banner.route";
+import { CustomerRoutes } from "../modules/customers/customer.route";
 
 const router = Router();
 
@@ -28,6 +29,10 @@ const moduleRoutes = [
   {
     path: "/users",
     router: UserRoutes,
+  },
+  {
+    path: "/customers",
+    router: CustomerRoutes,
   },
   {
     path: "/heros",
