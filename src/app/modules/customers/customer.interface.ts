@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 
 export type TCustomerName = {
   firstName: string;
@@ -7,8 +7,10 @@ export type TCustomerName = {
 };
 
 export type TCustomer = {
+  _id?: Types.ObjectId;
   id: string;
   name: TCustomerName;
+  role: string;
   password: string;
   gender: "male" | "female" | "other";
   email: string;
@@ -22,3 +24,11 @@ export type TCustomer = {
 export interface CustomerModel extends Model<TCustomer> {
   isUserExists(id: string): Promise<TCustomer | null>;
 }
+
+// customers filters fields
+export type TCustomerFilters = {
+  searchTerm?: string;
+  name?: string;
+  email?: string;
+  role?: number;
+};
