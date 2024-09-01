@@ -37,6 +37,10 @@ const customerSchema = new Schema<TCustomer, CustomerModel>(
       type: customerNameSchema,
       required: true,
     },
+    role: {
+      type: String,
+      required: true,
+    },
     password: {
       type: String,
       required: [true, "Password is required"],
@@ -123,4 +127,7 @@ customerSchema.statics.isUserExists = async function (id: string) {
 };
 
 // Create and export the User model based on the defined schema
-export const Customer = model<TCustomer, TCustomer>("Customer", customerSchema);
+export const Customer = model<TCustomer, CustomerModel>(
+  "Customer",
+  customerSchema
+);

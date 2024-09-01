@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 
 export type TCustomerName = {
   firstName: string;
@@ -7,8 +7,10 @@ export type TCustomerName = {
 };
 
 export type TCustomer = {
+  _id?: Types.ObjectId;
   id: string;
   name: TCustomerName;
+  role: string;
   password: string;
   gender: "male" | "female" | "other";
   email: string;
