@@ -4,14 +4,18 @@ import { UserServices } from "./user.service";
 import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
+import pick from "../../utils/pick";
+import { paginationFields } from "../../constants/pagination";
+import { userFilterableFields } from "./user.constant";
 
 // Controller to handle user creation
 const createUser = catchAsync(async (req, res) => {
-  const { user: userData } = req.body;
+  const userData = req.body;
 
   // Create a new user in the database using the validated data
   const result = await UserServices.createUserIntoDB(userData);
 
+  // Respond with a success message and the retrieved user data
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -22,9 +26,18 @@ const createUser = catchAsync(async (req, res) => {
 
 // Controller to handle retrieving all users
 const getAllUsers = catchAsync(async (req, res) => {
-  // Retrieve all users from the database
-  const result = await UserServices.getAllUsersFromDB();
+  // formating filters data as database requirment
+  const filtersData = pick(req.query, userFilterableFields);
 
+  // formating pagination fields with query requirment
+  const paginationOptions = pick(req.query, paginationFields);
+
+  // Retrieve all users from the database
+  const result = await UserServices.getAllUsersFromDB(
+    filtersData,
+    paginationOptions
+  );
+  // Respond with a success message and the retrieved user data
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -40,13 +53,6 @@ const getSingleUser = catchAsync(async (req, res) => {
   // Retrieve a single user from the database by their ID
   const result = await UserServices.getSingleUserFromDB(userId);
 
-  if (!result) {
-    return res.status(404).json({
-      success: false,
-      message: "User not found",
-    });
-  }
-
   // Respond with a success message and the retrieved user data
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -59,6 +65,8 @@ const getSingleUser = catchAsync(async (req, res) => {
 // Controller to handle updating a user by ID
 const updateUser = catchAsync(async (req, res) => {
   const { userId } = req.params;
+
+  // users updated data
   const updateData = req.body;
 
   // Update the user in the database using the validated data
@@ -81,13 +89,6 @@ const deleteUser = catchAsync(async (req, res) => {
   const result = await UserServices.deleteUserFromDB(userId);
 
   // Respond with a success message and the result of the deletion
-  if (!result) {
-    return res.status(404).json({
-      success: false,
-      message: "user not found",
-    });
-  }
-
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

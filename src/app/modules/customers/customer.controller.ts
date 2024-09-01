@@ -91,6 +91,7 @@ const deleteSingleCustomer = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// Export the customer controllers as an object for use in other parts of the application
 export const CustomerController = {
   createCustomers,
   getAllCustomers,

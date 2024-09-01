@@ -40,7 +40,14 @@ const userSchema = new Schema<TUser, UserModel>(
       required: [true, "password is required"],
       maxlength: [20, "password cant not be more than 20 characters"],
     },
-    contactNo: { type: String, required: true },
+    role: {
+      type: String,
+      required: true,
+    },
+    contactNo: {
+      type: String,
+      required: true,
+    },
     gender: {
       type: String,
       trim: true,
@@ -50,8 +57,15 @@ const userSchema = new Schema<TUser, UserModel>(
       },
       required: true,
     },
-    email: { type: String, trim: true, required: true, unique: true },
-    profileImage: { type: String },
+    email: {
+      type: String,
+      trim: true,
+      required: true,
+      unique: true,
+    },
+    profileImage: {
+      type: String,
+    },
     isDeleted: {
       type: Boolean,
       default: false, // Soft deletion flag, default is false (not deleted)

@@ -12,6 +12,7 @@ export type TUser = {
   password: string;
   gender: "male" | "female" | "other";
   email: string;
+  role: string;
   contactNo: string;
   profileImage?: string | undefined;
   isDeleted: boolean;
@@ -21,3 +22,11 @@ export type TUser = {
 export interface UserModel extends Model<TUser> {
   isUserExists(email: string): Promise<TUser | null>;
 }
+
+// user filters fields type
+export type TUserFilters = {
+  searchTerm?: string;
+  name?: string;
+  email?: string;
+  role?: number;
+};

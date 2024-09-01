@@ -127,6 +127,7 @@ const deleteCustomerFromDB = async (id: string): Promise<TCustomer | null> => {
   return result;
 };
 
+// Export the customer services as an object for use in other parts of the application
 export const CustomerService = {
   createCustomerIntoDB,
   getAllCusromersFromDB,

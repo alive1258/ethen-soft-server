@@ -6,18 +6,22 @@ import validateRequest from "../../middleware/validateRequest";
 const router = express.Router();
 
 //will call controller function
+
+// create user route
 router.post(
   "/create-user",
   validateRequest(userValidation.createUserValidationSchema),
   UserControllers.createUser
 );
 
+// get users route
+router.get("/", UserControllers.getAllUsers);
 router.get("/:userId", UserControllers.getSingleUser);
 
-router.delete("/:userId", UserControllers.deleteUser);
-
+// update users info route
 router.patch("/:userId", UserControllers.updateUser);
 
-router.get("/", UserControllers.getAllUsers);
+// delete user route
+router.delete("/:userId", UserControllers.deleteUser);
 
 export const UserRoutes = router;
