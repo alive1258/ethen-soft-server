@@ -16,7 +16,7 @@ const createUserIntoDB = async (userData: TUser) => {
   }
   // Check if a user with the given email already exists
   if (await User.isUserExists(userData.email)) {
-    throw new Error("user already exist"); // Throw an error if the user already exists
+    throw new ApiError(httpStatus.CONFLICT, "user already exist"); // Throw an error if the user already exists
   }
 
   // Create a new user in the database using the provided user data

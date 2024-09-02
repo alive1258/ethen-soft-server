@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { TTestimonial } from "./testimonial.interface";
 import { Testimonial } from "./testimonial.module";
 
@@ -30,7 +32,7 @@ const updateTestimonialInDB = async (
   });
 
   if (!result) {
-    throw new Error("Testimonial Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Testimonial Data not found");
   }
 
   return result;
@@ -41,7 +43,7 @@ const deleteTestimonialFromDB = async (_id: string) => {
   const result = await Testimonial.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("Testimonial Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Testimonial Data not found");
   }
 
   return result;

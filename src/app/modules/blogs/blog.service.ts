@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { TBlog } from "./blog.interface";
 import { Blog } from "./blog.module";
 
@@ -27,7 +29,7 @@ const updateBlogInDB = async (_id: string, updateData: Partial<TBlog>) => {
   });
 
   if (!result) {
-    throw new Error("Blog Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Blog Data not found");
   }
 
   return result;
@@ -38,7 +40,7 @@ const deleteBlogFromDB = async (_id: string) => {
   const result = await Blog.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("Blog Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Blog Data not found");
   }
 
   return result;

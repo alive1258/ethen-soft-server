@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { TOurClient } from "./ourClient.interface";
 import { OurClient } from "./ourClient.module";
 
@@ -30,7 +32,7 @@ const updateOurClientInDB = async (
   });
 
   if (!result) {
-    throw new Error("OurClient Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "OurClient Data not found");
   }
 
   return result;
@@ -41,7 +43,7 @@ const deleteOurClientFromDB = async (_id: string) => {
   const result = await OurClient.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("OurClient Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "OurClient Data not found");
   }
 
   return result;

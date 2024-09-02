@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { TTeam } from "./team.interface";
 import { Team } from "./team.module";
 
@@ -27,7 +29,7 @@ const updateTeamInDB = async (_id: string, updateData: Partial<TTeam>) => {
   });
 
   if (!result) {
-    throw new Error("Team Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Team Data not found");
   }
 
   return result;
@@ -38,7 +40,7 @@ const deleteTeamFromDB = async (_id: string) => {
   const result = await Team.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("Team Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Team Data not found");
   }
 
   return result;

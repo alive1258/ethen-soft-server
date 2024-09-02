@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { TFaq } from "./faq.interface";
 import { Faq } from "./faq.module";
 
@@ -27,7 +29,7 @@ const updateFaqInDB = async (_id: string, updateData: Partial<TFaq>) => {
   });
 
   if (!result) {
-    throw new Error("Faq Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Faq Data not found");
   }
 
   return result;
@@ -38,7 +40,7 @@ const deleteFaqFromDB = async (_id: string) => {
   const result = await Faq.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("Faq Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Faq Data not found");
   }
 
   return result;

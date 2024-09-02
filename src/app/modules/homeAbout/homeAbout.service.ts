@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { THomeAbout } from "./homeAbout.interface";
 import { HomeAbout } from "./homeAbout.module";
 
@@ -30,7 +32,7 @@ const updateHomeAboutInDB = async (
   });
 
   if (!result) {
-    throw new Error("HomeAbout Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "HomeAbout Data not found");
   }
 
   return result;
@@ -41,7 +43,7 @@ const deleteHomeAboutFromDB = async (_id: string) => {
   const result = await HomeAbout.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("HomeAbout Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "HomeAbout Data not found");
   }
 
   return result;

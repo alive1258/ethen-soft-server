@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { TOurWork } from "./ourWork.interface";
 import { OurWork } from "./ourWork.module";
 
@@ -30,7 +32,7 @@ const updateOurWorkInDB = async (
   });
 
   if (!result) {
-    throw new Error("OurWork Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "OurWork Data not found");
   }
 
   return result;
@@ -41,7 +43,7 @@ const deleteOurWorkFromDB = async (_id: string) => {
   const result = await OurWork.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("OurWork Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "OurWork Data not found");
   }
 
   return result;

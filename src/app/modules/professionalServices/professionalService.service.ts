@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { TProfessionalService } from "./professionalService.interface";
 import { ProfessionalService } from "./professionalService.module";
 
@@ -32,7 +34,10 @@ const updateProfessionalServiceInDB = async (
   });
 
   if (!result) {
-    throw new Error("ProfessionalService Data not found");
+    throw new ApiError(
+      httpStatus.NOT_FOUND,
+      "ProfessionalService Data not found"
+    );
   }
 
   return result;
@@ -43,7 +48,10 @@ const deleteProfessionalServiceFromDB = async (_id: string) => {
   const result = await ProfessionalService.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("ProfessionalService Data not found");
+    throw new ApiError(
+      httpStatus.NOT_FOUND,
+      "ProfessionalService Data not found"
+    );
   }
 
   return result;

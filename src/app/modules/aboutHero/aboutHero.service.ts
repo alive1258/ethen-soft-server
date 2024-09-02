@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { TAboutHero } from "./aboutHero.interface";
 import { AboutHero } from "./aboutHero.module";
 
@@ -30,7 +32,7 @@ const updateAboutHeroInDB = async (
   });
 
   if (!result) {
-    throw new Error("AboutHero Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "AboutHero Data not found");
   }
 
   return result;
@@ -41,7 +43,7 @@ const deleteAboutHeroFromDB = async (_id: string) => {
   const result = await AboutHero.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("AboutHero Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "AboutHero Data not found");
   }
 
   return result;

@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { TJoinUs } from "./joinUs.interface";
 import { JoinUs } from "./joinUs.module";
 
@@ -27,7 +29,7 @@ const updateJoinUsInDB = async (_id: string, updateData: Partial<TJoinUs>) => {
   });
 
   if (!result) {
-    throw new Error("JoinUs Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "JoinUs Data not found");
   }
 
   return result;
@@ -38,7 +40,7 @@ const deleteJoinUsFromDB = async (_id: string) => {
   const result = await JoinUs.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("JoinUs Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "JoinUs Data not found");
   }
 
   return result;

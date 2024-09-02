@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { TOurService } from "./ourService.interface";
 import { OurService } from "./ourService.module";
 
@@ -30,7 +32,7 @@ const updateOurServiceInDB = async (
   });
 
   if (!result) {
-    throw new Error("OurService Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "OurService Data not found");
   }
 
   return result;
@@ -41,7 +43,7 @@ const deleteOurServiceFromDB = async (_id: string) => {
   const result = await OurService.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("OurService Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "OurService Data not found");
   }
 
   return result;
