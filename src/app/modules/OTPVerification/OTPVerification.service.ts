@@ -90,57 +90,25 @@ const verifyOTP = async (userId: any, otp: string, role: string) => {
     );
   }
 
-  // create session for transaction and rollback
-  const session = await mongoose.startSession();
-
   // delete the OTP verification data if validation is complete
-  try {
-    session.startTransaction();
-    if (role === "customer") {
-      // update customer
-      await Customer.updateOne(
-        { _id: userId },
-        { isEmailVerified: true },
-        { session }
-      );
-      // delete the otp verification data from database
-      await OTPVerification.deleteMany({ userId }, { session });
+  if (role === "customer") {
+    // update customer
+    await Customer.updateOne({ _id: userId }, { isEmailVerified: true });
+    // delete the otp verification data from database
+    await OTPVerification.deleteMany({ userId });
 
-      // stop transaction and rollback
-      session.commitTransaction();
-      // stop session
-      session.endSession();
+    // get the customer from database for response
+    const user = await Customer.findById({ _id: userId }, { password: 0 });
+    return user;
+  } else {
+    // update user
+    await User.updateOne({ _id: userId }, { isEmailVerified: true });
+    // delete the otp verification data from database
+    await OTPVerification.deleteMany({ userId });
 
-      // get the customer from database for response
-      const user = await Customer.findById({ _id: userId }, { password: 0 });
-      return user;
-    } else {
-      // update user
-      await User.updateOne(
-        { _id: userId },
-        { isEmailVerified: true },
-        { session }
-      );
-      // delete the otp verification data from database
-      await OTPVerification.deleteMany({ userId }, { session });
-
-      // stop transaction and rollback
-      session.commitTransaction();
-      // stop session
-      session.endSession();
-
-      // get the user from database for response
-      const user = await User.findById({ _id: userId }, { password: 0 });
-      return user;
-    }
-  } catch (error) {
-    // abort the transaction
-    session.abortTransaction();
-    // stop session
-    session.endSession();
-
-    // throw the error in global error handler
-    throw error;
+    // get the user from database for response
+    const user = await User.findById({ _id: userId }, { password: 0 });
+    return user;
   }
 };
 

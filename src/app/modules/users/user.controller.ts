@@ -21,9 +21,6 @@ const createUser = catchAsync(async (req, res) => {
       result._id,
       result?.email
     );
-
-    console.log(newResult);
-
     // Respond with a success message and the retrieved user data
     sendResponse(res, {
       statusCode: httpStatus.OK,
