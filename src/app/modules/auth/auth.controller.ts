@@ -33,7 +33,6 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
 // refresh token controller function
 const refreshToken = catchAsync(async (req: Request, res: Response) => {
   // destructuring refreshToken from cookies
-  console.log(req.cookies);
   const { refreshToken } = req.cookies;
 
   const result = await AuthService.refreshTokenService(refreshToken);
