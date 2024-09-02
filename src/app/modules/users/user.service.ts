@@ -10,7 +10,10 @@ import httpStatus from "http-status";
 
 // Service to create a new user in the database
 const createUserIntoDB = async (userData: TUser) => {
-  console.log(userData);
+  // set initial isEmailVerified to false
+  if (userData?.isEmailVerified) {
+    userData.isEmailVerified = false;
+  }
   // Check if a user with the given email already exists
   if (await User.isUserExists(userData.email)) {
     throw new Error("user already exist"); // Throw an error if the user already exists

@@ -6,14 +6,15 @@ import { TPaginationOptions } from "../../../interfaces/pagination";
 import { TGenericResponse } from "../../../interfaces/common";
 import { paginationHelpers } from "../../../helpers/paginationHelpers";
 import { SortOrder } from "mongoose";
-import { customerFilterableFilds } from "./customer.constant";
+import { customerFilterableFields } from "./customer.constant";
 
 const createCustomerIntoDB = async (
   customer: TCustomer
 ): Promise<TCustomer | null> => {
-  //set customer role
+  //set customer role and set initial isEmailVerified to false
   if (customer) {
     customer.role = "customer";
+    customer.isEmailVerified = false;
   }
 
   // check that the customer is already exist or not
@@ -29,14 +30,14 @@ const createCustomerIntoDB = async (
 };
 
 // get all customers
-const getAllCusromersFromDB = async (
+const getAllCustomersFromDB = async (
   filters: TCustomerFilters,
   paginationOptions: TPaginationOptions
 ): Promise<TGenericResponse<TCustomer[]>> => {
   // destructuring filters
   const { searchTerm, ...filtersData } = filters;
 
-  //   destructuring all pagination dependencis
+  //   destructuring all pagination dependencies
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelpers.calculatePagination(paginationOptions);
 
@@ -46,7 +47,7 @@ const getAllCusromersFromDB = async (
   // Search term filter (e.g., for name or email)
   if (searchTerm) {
     andConditions.push({
-      $or: customerFilterableFilds.map((field) => ({
+      $or: customerFilterableFields.map((field) => ({
         [field]: {
           $regex: searchTerm,
           $options: "i",
@@ -130,7 +131,7 @@ const deleteCustomerFromDB = async (id: string): Promise<TCustomer | null> => {
 // Export the customer services as an object for use in other parts of the application
 export const CustomerService = {
   createCustomerIntoDB,
-  getAllCusromersFromDB,
+  getAllCustomersFromDB,
   getSingleCustomerFromDB,
   updateSingleCustomerFromDB,
   deleteCustomerFromDB,

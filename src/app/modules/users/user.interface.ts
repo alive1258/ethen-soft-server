@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 
 export type TUserName = {
   firstName: string;
@@ -7,11 +7,13 @@ export type TUserName = {
 };
 
 export type TUser = {
+  _id?: Types.ObjectId;
   id: string;
   name: TUserName;
   password: string;
   gender: "male" | "female" | "other";
   email: string;
+  isEmailVerified: boolean;
   role: string;
   contactNo: string;
   profileImage?: string | undefined;

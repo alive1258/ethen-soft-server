@@ -5,7 +5,7 @@ import { Types } from "mongoose";
 import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
 import pick from "../../utils/pick";
-import { customerFilterableFilds } from "./customer.constant";
+import { customerFilterableFields } from "./customer.constant";
 import { paginationFields } from "../../constants/pagination";
 import { OTPVerificationService } from "../OTPVerification/OTPVerification.service";
 
@@ -33,10 +33,10 @@ const createCustomers = catchAsync(async (req: Request, res: Response) => {
 
 // get all customers controller
 const getAllCustomers = catchAsync(async (req: Request, res: Response) => {
-  const filters = pick(req.query, customerFilterableFilds);
+  const filters = pick(req.query, customerFilterableFields);
   const paginationOptions = pick(req.query, paginationFields);
 
-  const result = await CustomerService.getAllCusromersFromDB(
+  const result = await CustomerService.getAllCustomersFromDB(
     filters,
     paginationOptions
   );

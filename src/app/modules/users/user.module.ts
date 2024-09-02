@@ -63,6 +63,10 @@ const userSchema = new Schema<TUser, UserModel>(
       required: true,
       unique: true,
     },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
     profileImage: {
       type: String,
     },

@@ -7,12 +7,12 @@ import ApiError from "../../../errors/ApiError";
 import httpStatus from "http-status";
 import { Customer } from "../customers/customer.module";
 import { User } from "../users/user.module";
-import { Types } from "mongoose";
+import mongoose, { Types } from "mongoose";
 
 // OTP send on the email service
 const sendOTPVerificationEmail = async (_id: Types.ObjectId, email: string) => {
   try {
-    // random otp gererate
+    // random otp generate
     const otp = `${Math.floor(1000 + Math.random() * 900000)}`;
 
     // make a mail structure
@@ -29,18 +29,18 @@ const sendOTPVerificationEmail = async (_id: Types.ObjectId, email: string) => {
     // hashing otp
     const hashedOTP = await bcrypt.hash(otp, Number(config.bcrypt_salt_rounds));
 
-    // create well structured data for create OTP verifitaction
+    // create well structured data for create OTP verification
     const data: TOTPVerification = {
       userId: _id,
       otp: hashedOTP,
       createdAt: new Date(),
-      expiresAt: new Date(Date.now() + 60000),
+      expiresAt: new Date(Date.now() + Number(config.email_expired_time)),
     };
 
     // create a OTP verification data on database
     const newOTPVerification = await OTPVerification.create(data);
 
-    // send mail with the help of nodemail transporter
+    // send mail with the help of nodemailer transporter
     await transporter.sendMail(mailOptions);
 
     return newOTPVerification;
@@ -69,7 +69,7 @@ const verifyOTP = async (userId: any, otp: string, role: string) => {
     );
   }
 
-  // dstructured OTP verification data
+  // destructured OTP verification data
   const { expiresAt, otp: hashedOTP } = UserOTPVerificationRecords[0];
 
   // check the validation time
@@ -81,7 +81,7 @@ const verifyOTP = async (userId: any, otp: string, role: string) => {
     );
   }
 
-  // OTP validaton check
+  // OTP validation check
   const validOTP = await bcrypt.compare(otp, hashedOTP);
   if (!validOTP) {
     throw new ApiError(
@@ -90,18 +90,57 @@ const verifyOTP = async (userId: any, otp: string, role: string) => {
     );
   }
 
-  // delete the OTP verification data if validition is complete
-  await OTPVerification.deleteMany({ userId });
-  if (role === "customer") {
-    // update customer
-    await Customer.updateOne({ _id: userId }, {});
-    const user = await Customer.findById({ _id: userId }, { password: 0 });
-    return user;
-  } else {
-    // update user
-    await User.updateOne({ _id: userId });
-    const user = await User.findById({ _id: userId }, { password: 0 });
-    return user;
+  // create session for transaction and rollback
+  const session = await mongoose.startSession();
+
+  // delete the OTP verification data if validation is complete
+  try {
+    session.startTransaction();
+    if (role === "customer") {
+      // update customer
+      await Customer.updateOne(
+        { _id: userId },
+        { isEmailVerified: true },
+        { session }
+      );
+      // delete the otp verification data from database
+      await OTPVerification.deleteMany({ userId }, { session });
+
+      // stop transaction and rollback
+      session.commitTransaction();
+      // stop session
+      session.endSession();
+
+      // get the customer from database for response
+      const user = await Customer.findById({ _id: userId }, { password: 0 });
+      return user;
+    } else {
+      // update user
+      await User.updateOne(
+        { _id: userId },
+        { isEmailVerified: true },
+        { session }
+      );
+      // delete the otp verification data from database
+      await OTPVerification.deleteMany({ userId }, { session });
+
+      // stop transaction and rollback
+      session.commitTransaction();
+      // stop session
+      session.endSession();
+
+      // get the user from database for response
+      const user = await User.findById({ _id: userId }, { password: 0 });
+      return user;
+    }
+  } catch (error) {
+    // abort the transaction
+    session.abortTransaction();
+    // stop session
+    session.endSession();
+
+    // throw the error in global error handler
+    throw error;
   }
 };
 

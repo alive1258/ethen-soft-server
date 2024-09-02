@@ -25,7 +25,7 @@ router.get("/:id", CustomerController.getSingleCustomer);
 //update single customer route
 router.patch(
   "/:id",
-  //   auth(ENUM_ROLE.SUPER_ADMIN, ENUM_ROLE.ADMIN, ENUM_ROLE.USER),
+  // auth(ENUM_ROLE.SUPER_ADMIN, ENUM_ROLE.ADMIN, ENUM_ROLE.USER),
   validateRequest(CustomerValidation.updateCustomerValidationSchema),
   CustomerController.updateCustomer
 );

@@ -46,6 +46,10 @@ const customerSchema = new Schema<TCustomer, CustomerModel>(
       required: [true, "Password is required"],
       maxlength: [20, "Password can't be more than 20 characters"],
     },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
     contactNo: { type: String, required: true },
     gender: {
       type: String,

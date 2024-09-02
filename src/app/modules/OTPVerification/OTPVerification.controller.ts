@@ -29,7 +29,7 @@ const resendOTPVerification = catchAsync(
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: "OTP resended successfully.",
+      message: "OTP re-sended successfully.",
       data: result,
     });
   }
