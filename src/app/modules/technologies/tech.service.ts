@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { TTechnology } from "./technology.interface";
 import { Technology } from "./technology.module";
 
@@ -30,7 +32,7 @@ const updateTechnologyInDB = async (
   });
 
   if (!result) {
-    throw new Error("Technology Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Technology Data not found");
   }
 
   return result;
@@ -41,7 +43,7 @@ const deleteTechnologyFromDB = async (_id: string) => {
   const result = await Technology.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("Hero Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Hero Data not found");
   }
 
   return result;

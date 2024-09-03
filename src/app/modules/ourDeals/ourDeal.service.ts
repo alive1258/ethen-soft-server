@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { TOurDeal } from "./ourDeal.interface";
 import { OurDeal } from "./ourDeal.module";
 
@@ -30,7 +32,7 @@ const updateOurDealInDB = async (
   });
 
   if (!result) {
-    throw new Error("OurDeal Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "OurDeal Data not found");
   }
 
   return result;
@@ -41,7 +43,7 @@ const deleteOurDealFromDB = async (_id: string) => {
   const result = await OurDeal.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("OurDeal Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "OurDeal Data not found");
   }
 
   return result;

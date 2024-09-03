@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { TTermsCondition } from "./termsCondition.interface";
 import { TermsCondition } from "./termsCondition.module";
 
@@ -30,7 +32,7 @@ const updateTermsConditionInDB = async (
   });
 
   if (!result) {
-    throw new Error("TermsCondition Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "TermsCondition Data not found");
   }
 
   return result;
@@ -41,7 +43,7 @@ const deleteTermsConditionFromDB = async (_id: string) => {
   const result = await TermsCondition.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("TermsCondition Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "TermsCondition Data not found");
   }
 
   return result;

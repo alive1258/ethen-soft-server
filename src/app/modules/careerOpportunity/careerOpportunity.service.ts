@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { TCareerOpportunity } from "./careerOpportunity.interface";
 import { CareerOpportunity } from "./careerOpportunity.module";
 
@@ -32,7 +34,10 @@ const updateCareerOpportunityInDB = async (
   });
 
   if (!result) {
-    throw new Error("CareerOpportunity Data not found");
+    throw new ApiError(
+      httpStatus.NOT_FOUND,
+      "CareerOpportunity Data not found"
+    );
   }
 
   return result;
@@ -43,7 +48,10 @@ const deleteCareerOpportunityFromDB = async (_id: string) => {
   const result = await CareerOpportunity.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("CareerOpportunity Data not found");
+    throw new ApiError(
+      httpStatus.NOT_FOUND,
+      "CareerOpportunity Data not found"
+    );
   }
 
   return result;

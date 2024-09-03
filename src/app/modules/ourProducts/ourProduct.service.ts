@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { TOurProduct } from "./ourProduct.interface";
 import { OurProduct } from "./ourProduct.module";
 
@@ -30,7 +32,7 @@ const updateOurProductInDB = async (
   });
 
   if (!result) {
-    throw new Error("OurProduct Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "OurProduct Data not found");
   }
 
   return result;
@@ -41,7 +43,7 @@ const deleteOurProductFromDB = async (_id: string) => {
   const result = await OurProduct.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("OurProduct Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "OurProduct Data not found");
   }
 
   return result;

@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Query, Schema, model } from "mongoose";
 
 import bcrypt from "bcrypt";
 import config from "../../config";
@@ -45,6 +45,10 @@ const customerSchema = new Schema<TCustomer, CustomerModel>(
       type: String,
       required: [true, "Password is required"],
       maxlength: [20, "Password can't be more than 20 characters"],
+    },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
     },
     contactNo: { type: String, required: true },
     gender: {
@@ -94,7 +98,7 @@ customerSchema.post<TCustomer>("save", async function (doc, next) {
 });
 
 // Pre-find middleware to automatically exclude soft-deleted users from query results
-customerSchema.pre("find", function (next) {
+customerSchema.pre<Query<TCustomer, TCustomer>>("find", function (next) {
   this.find({
     isDeleted: { $ne: true }, // Exclude users where isDeleted is true
   });

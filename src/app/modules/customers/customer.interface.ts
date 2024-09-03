@@ -15,6 +15,7 @@ export type TCustomer = {
   gender: "male" | "female" | "other";
   email: string;
   contactNo: string;
+  isEmailVerified: boolean;
   profileImage?: string;
   isDeleted: boolean;
 };

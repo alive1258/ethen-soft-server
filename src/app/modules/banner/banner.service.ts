@@ -1,5 +1,7 @@
+import httpStatus from "http-status";
 import { TBanner } from "./banner.interface";
 import { Banner } from "./bannner.module";
+import ApiError from "../../../errors/ApiError";
 
 // Service to create a new Banner in the database
 const createBannerIntoDB = async (heroData: TBanner) => {
@@ -27,7 +29,7 @@ const updateBannerInDB = async (_id: string, updateData: Partial<TBanner>) => {
   });
 
   if (!result) {
-    throw new Error("Banner Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Banner Data not found");
   }
 
   return result;
@@ -38,7 +40,7 @@ const deleteBannerFromDB = async (_id: string) => {
   const result = await Banner.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("Hero Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Hero Data not found");
   }
 
   return result;

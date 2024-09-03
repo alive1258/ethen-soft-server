@@ -19,6 +19,7 @@ const createCustomerValidationSchema = z.object({
       }),
     }),
     email: z.string().trim().email("Invalid email address"),
+    isEmailVerified: z.boolean().optional(),
     contactNo: z
       .string()
       .trim()
@@ -56,6 +57,7 @@ const updateCustomerValidationSchema = z.object({
       })
       .optional(),
     email: z.string().trim().email("Invalid email address").optional(),
+    isEmailVerified: z.boolean().optional(),
     contactNo: z
       .string()
       .trim()

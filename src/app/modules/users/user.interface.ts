@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 
 export type TUserName = {
   firstName: string;
@@ -7,11 +7,14 @@ export type TUserName = {
 };
 
 export type TUser = {
+  _id?: Types.ObjectId;
   id: string;
   name: TUserName;
   password: string;
   gender: "male" | "female" | "other";
   email: string;
+  isEmailVerified: boolean;
+  role: string;
   contactNo: string;
   profileImage?: string | undefined;
   isDeleted: boolean;
@@ -21,3 +24,11 @@ export type TUser = {
 export interface UserModel extends Model<TUser> {
   isUserExists(email: string): Promise<TUser | null>;
 }
+
+// user filters fields type
+export type TUserFilters = {
+  searchTerm?: string;
+  name?: string;
+  email?: string;
+  role?: number;
+};

@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { TTrustUs } from "./trustUs.interface";
 import { TrustUs } from "./trustUs.module";
 
@@ -30,7 +32,7 @@ const updateTrustUsInDB = async (
   });
 
   if (!result) {
-    throw new Error("TrustUs Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "TrustUs Data not found");
   }
 
   return result;
@@ -41,7 +43,7 @@ const deleteTrustUsFromDB = async (_id: string) => {
   const result = await TrustUs.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("TrustUs Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "TrustUs Data not found");
   }
 
   return result;

@@ -5,37 +5,38 @@ import { Types } from "mongoose";
 import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
 import pick from "../../utils/pick";
-import { customerFilterableFilds } from "./customer.constant";
+import { customerFilterableFields } from "./customer.constant";
 import { paginationFields } from "../../constants/pagination";
+import { OTPVerificationService } from "../OTPVerification/OTPVerification.service";
 
+// create customer controller
 const createCustomers = catchAsync(async (req: Request, res: Response) => {
   const customerData = req.body;
 
-  console.log(req.body);
   const result = await CustomerService.createCustomerIntoDB(customerData);
 
-  // if (result?._id) {
-  //   const data: {
-  //     _id: Types.ObjectId;
-  //     email: string;
-  //   } = { _id: result._id, email: result.email };
-  //   const newResult = await UserOTPVerificationService.sendOTPVerificationEmail(
-  //     data
-  //   );
+  if (result?._id) {
+    const newResult = await OTPVerificationService.sendOTPVerificationEmail(
+      result._id,
+      result?.email
+    );
 
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Customer Created successfully.",
-    data: result,
-  });
+    // Respond with a success message and the retrieved customer data
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Customer Created successfully.",
+      data: newResult,
+    });
+  }
 });
 
+// get all customers controller
 const getAllCustomers = catchAsync(async (req: Request, res: Response) => {
-  const filters = pick(req.query, customerFilterableFilds);
+  const filters = pick(req.query, customerFilterableFields);
   const paginationOptions = pick(req.query, paginationFields);
 
-  const result = await CustomerService.getAllCusromersFromDB(
+  const result = await CustomerService.getAllCustomersFromDB(
     filters,
     paginationOptions
   );
@@ -48,6 +49,7 @@ const getAllCustomers = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// get single customer controller
 const getSingleCustomer = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await CustomerService.getSingleCustomerFromDB(id);
@@ -60,6 +62,7 @@ const getSingleCustomer = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// update customer controller
 const updateCustomer = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const updatedData = req.body;
@@ -76,6 +79,7 @@ const updateCustomer = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// delete customer controller
 const deleteSingleCustomer = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await CustomerService.deleteCustomerFromDB(id);
@@ -88,6 +92,7 @@ const deleteSingleCustomer = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// Export the customer controllers as an object for use in other parts of the application
 export const CustomerController = {
   createCustomers,
   getAllCustomers,

@@ -6,13 +6,15 @@ import { TPaginationOptions } from "../../../interfaces/pagination";
 import { TGenericResponse } from "../../../interfaces/common";
 import { paginationHelpers } from "../../../helpers/paginationHelpers";
 import { SortOrder } from "mongoose";
+import { customerFilterableFields } from "./customer.constant";
 
 const createCustomerIntoDB = async (
   customer: TCustomer
 ): Promise<TCustomer | null> => {
-  //set customer role
+  //set customer role and set initial isEmailVerified to false
   if (customer) {
     customer.role = "customer";
+    customer.isEmailVerified = false;
   }
 
   // check that the customer is already exist or not
@@ -28,14 +30,14 @@ const createCustomerIntoDB = async (
 };
 
 // get all customers
-const getAllCusromersFromDB = async (
+const getAllCustomersFromDB = async (
   filters: TCustomerFilters,
   paginationOptions: TPaginationOptions
 ): Promise<TGenericResponse<TCustomer[]>> => {
   // destructuring filters
   const { searchTerm, ...filtersData } = filters;
 
-  //   destructuring all pagination dependencis
+  //   destructuring all pagination dependencies
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelpers.calculatePagination(paginationOptions);
 
@@ -45,7 +47,7 @@ const getAllCusromersFromDB = async (
   // Search term filter (e.g., for name or email)
   if (searchTerm) {
     andConditions.push({
-      $or: ["name", "email"].map((field) => ({
+      $or: customerFilterableFields.map((field) => ({
         [field]: {
           $regex: searchTerm,
           $options: "i",
@@ -100,6 +102,7 @@ const getAllCusromersFromDB = async (
 const getSingleCustomerFromDB = async (
   id: string
 ): Promise<TCustomer | null> => {
+  // find customer from database with the help of id
   const result = await Customer.findById(id);
   return result;
 };
@@ -109,6 +112,7 @@ const updateSingleCustomerFromDB = async (
   id: string,
   updatedData: Partial<TCustomer>
 ): Promise<TCustomer | null> => {
+  // update customer from database with the help of id
   const result = await Customer.findOneAndUpdate({ _id: id }, updatedData, {
     new: true,
   });
@@ -118,14 +122,16 @@ const updateSingleCustomerFromDB = async (
 
 // delete single customer data from database
 const deleteCustomerFromDB = async (id: string): Promise<TCustomer | null> => {
+  // delete customer from database with the help of id
   const result = await Customer.findByIdAndDelete(id);
 
   return result;
 };
 
+// Export the customer services as an object for use in other parts of the application
 export const CustomerService = {
   createCustomerIntoDB,
-  getAllCusromersFromDB,
+  getAllCustomersFromDB,
   getSingleCustomerFromDB,
   updateSingleCustomerFromDB,
   deleteCustomerFromDB,

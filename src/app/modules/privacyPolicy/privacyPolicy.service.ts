@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { TPrivacyPolicy } from "./privacyPolicy.interface";
 import { PrivacyPolicy } from "./privacyPolicy.module";
 
@@ -30,7 +32,7 @@ const updatePrivacyPolicyInDB = async (
   });
 
   if (!result) {
-    throw new Error("PrivacyPolicy Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "PrivacyPolicy Data not found");
   }
 
   return result;
@@ -41,7 +43,7 @@ const deletePrivacyPolicyFromDB = async (_id: string) => {
   const result = await PrivacyPolicy.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("PrivacyPolicy Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "PrivacyPolicy Data not found");
   }
 
   return result;

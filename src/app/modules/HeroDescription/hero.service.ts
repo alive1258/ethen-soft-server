@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import ApiError from "../../../errors/ApiError";
 import { THero } from "./hero.interface";
 import { Hero } from "./hero.module";
 
@@ -27,7 +29,7 @@ const updateHeroInDB = async (_id: string, updateData: Partial<THero>) => {
   });
 
   if (!result) {
-    throw new Error("Hero Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Hero Data not found");
   }
 
   return result;
@@ -38,7 +40,7 @@ const deleteHeroFromDB = async (_id: string) => {
   const result = await Hero.findByIdAndDelete(_id);
 
   if (!result) {
-    throw new Error("Hero Data not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Hero Data not found");
   }
 
   return result;
