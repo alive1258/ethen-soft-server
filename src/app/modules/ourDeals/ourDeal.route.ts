@@ -8,7 +8,7 @@ const router = express.Router();
 
 // Route to create a new OurDeal
 router.post(
-  "/create-our-Deal",
+  "/create-our-deal",
   validateRequest(OurDealValidation.createOurDealValidationSchema),
   OurDealControllers.createOurDeal
 );
