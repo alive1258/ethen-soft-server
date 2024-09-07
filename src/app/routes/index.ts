@@ -171,7 +171,7 @@ const moduleRoutes = [
     router: ServiceFAQRoutes,
   },
   {
-    path: "/client-review",
+    path: "/client-reviews",
     router: ClientReviewRoutes,
   },
 ];

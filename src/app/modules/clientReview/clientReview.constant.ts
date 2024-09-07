@@ -1,6 +1,6 @@
 export const clientReviewFilterableFields = [
   "searchTerm",
-  "serviceId",
-  "customerId",
+  "service",
+  "customer",
 ];
 export const clientReviewSearchableFields = ["rating", "review"];

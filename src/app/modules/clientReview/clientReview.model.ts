@@ -11,13 +11,17 @@ const clientReviewSchema = new Schema<TClientReview, ClientReviewModel>(
       type: String,
       required: true,
     },
-    serviceId: {
-      type: mongoose.Schema.Types.ObjectId,
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    service: {
+      type: String,
       required: true,
       ref: "Service",
     },
-    customerId: {
-      type: mongoose.Schema.Types.ObjectId,
+    customer: {
+      type: String,
       required: true,
       ref: "Customer",
     },
