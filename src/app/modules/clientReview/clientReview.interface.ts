@@ -10,3 +10,9 @@ export interface TClientReview {
 }
 
 export type ClientReviewModel = Model<TClientReview, Record<string, unknown>>;
+
+export type TClientReviewFilters = {
+  searchTerm?: string;
+  serviceId?: string;
+  customerId?: string;
+};

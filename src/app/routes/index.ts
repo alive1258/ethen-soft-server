@@ -31,6 +31,7 @@ import { ServiceRoutes } from "../modules/service/service.route";
 import { CategoryRoutes } from "../modules/category/category.route";
 import { ServiceImageRoutes } from "../modules/serviceImage/serviceImage.route";
 import { ServiceFAQRoutes } from "../modules/serviceFAQ/serviceFAQ.route";
+import { ClientReviewRoutes } from "../modules/clientReview/clientReview.route";
 
 const router = Router();
 
@@ -168,6 +169,10 @@ const moduleRoutes = [
   {
     path: "/service-faq",
     router: ServiceFAQRoutes,
+  },
+  {
+    path: "/client-review",
+    router: ClientReviewRoutes,
   },
 ];
 

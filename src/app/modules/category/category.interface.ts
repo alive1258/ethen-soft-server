@@ -1,4 +1,5 @@
 import { Model, Types } from "mongoose";
+import { TService } from "../service/service.interface";
 
 // declared category type
 export type TCategory = {
@@ -7,7 +8,7 @@ export type TCategory = {
   title: string;
   description: string;
   logo: string;
-  service: Types.ObjectId;
+  service: Types.ObjectId | TService;
 };
 
 // created model for using method or statics
