@@ -163,7 +163,7 @@ const moduleRoutes = [
     router: CategoryRoutes,
   },
   {
-    path: "/serviceImage",
+    path: "/service-images",
     router: ServiceImageRoutes,
   },
   {

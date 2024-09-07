@@ -5,7 +5,7 @@ export interface TServiceImage {
   _id?: Types.ObjectId;
   title: string;
   image: string;
-  serviceId: Types.ObjectId | TService;
+  service: string | TService;
 }
 
 export type ServiceImageModel = Model<TServiceImage, Record<string, unknown>>;

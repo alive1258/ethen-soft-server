@@ -1,2 +1,2 @@
-export const serviceImageFilterableFiends = ["name"];
-export const serviceImageSearchableFiends = ["searchTerm", "name", "title"];
+export const serviceImageFilterableFiends = ["searchTerm", "name", "service"];
+export const serviceImageSearchableFiends = ["name", "title"];

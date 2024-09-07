@@ -11,8 +11,8 @@ const serviceImageSchema = new Schema<TServiceImage, ServiceImageModel>(
       type: String,
       required: true,
     },
-    serviceId: {
-      type: mongoose.Schema.Types.ObjectId,
+    service: {
+      type: String,
       required: true,
       ref: "Service",
     },
