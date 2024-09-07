@@ -24,6 +24,7 @@ import { BannerRoutes } from "../modules/banner/banner.route";
 import { CustomerRoutes } from "../modules/customers/customer.route";
 import { OTPVerificationRoute } from "../modules/OTPVerification/OTPVerification.route";
 import { AuthRoutes } from "../modules/auth/auth.route";
+import { PricingCategoryRoutes } from "../modules/priceingCategory/pricingCategory.route";
 
 const router = Router();
 
@@ -129,6 +130,10 @@ const moduleRoutes = [
   {
     path: "/terms-conditions",
     router: TermsConditionRoutes,
+  },
+  {
+    path: "/pricing-category",
+    router: PricingCategoryRoutes,
   },
 ];
 
