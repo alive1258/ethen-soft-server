@@ -5,9 +5,9 @@ import { TPricingCategory } from "./pricingCategory.interface";
 
 // Service to create a new Pricing Category in the database
 const createPricingCategoryIntoDB = async (
-  heroData: TPricingCategory
+  data: TPricingCategory
 ): Promise<TPricingCategory> => {
-  const result = await PricingCategory.create(heroData);
+  const result = await PricingCategory.create(data);
 
   return result;
 };
