@@ -7,7 +7,7 @@ export type TCategory = {
   title: string;
   description: string;
   logo: string;
-  serviceId: Types.ObjectId;
+  service: Types.ObjectId;
 };
 
 // created model for using method or statics

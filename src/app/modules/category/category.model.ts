@@ -19,7 +19,7 @@ const categorySchema = new Schema<TCategory, CategoryModel>(
       type: String,
       required: true,
     },
-    serviceId: {
+    service: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "Service",
