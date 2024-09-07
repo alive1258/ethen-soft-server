@@ -24,7 +24,9 @@ import { BannerRoutes } from "../modules/banner/banner.route";
 import { CustomerRoutes } from "../modules/customers/customer.route";
 import { OTPVerificationRoute } from "../modules/OTPVerification/OTPVerification.route";
 import { AuthRoutes } from "../modules/auth/auth.route";
-import { PricingCategoryRoutes } from "../modules/priceingCategory/pricingCategory.route";
+import { PricingCategoryRoutes } from "../modules/pricingCategory/pricingCategory.route";
+import { PricingFeatureRoutes } from "../modules/pricingFeature/pricingFeature.route";
+import { PricingRoutes } from "../modules/pricing/pricing.route";
 
 const router = Router();
 
@@ -134,6 +136,14 @@ const moduleRoutes = [
   {
     path: "/pricing-category",
     router: PricingCategoryRoutes,
+  },
+  {
+    path: "/pricing-feature",
+    router: PricingFeatureRoutes,
+  },
+  {
+    path: "/pricing",
+    router: PricingRoutes,
   },
 ];
 

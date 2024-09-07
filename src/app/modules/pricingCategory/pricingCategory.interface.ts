@@ -6,4 +6,7 @@ export interface TPricingCategory {
 }
 
 // create a model type for using method and statics
-export type PricingModel = Model<TPricingCategory, Record<string, unknown>>;
+export type PricingCategoryModel = Model<
+  TPricingCategory,
+  Record<string, unknown>
+>;
