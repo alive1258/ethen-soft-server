@@ -29,6 +29,7 @@ import { PricingFeatureRoutes } from "../modules/pricingFeature/pricingFeature.r
 import { PricingRoutes } from "../modules/pricing/pricing.route";
 import { ServiceRoutes } from "../modules/service/service.route";
 import { CategoryRoutes } from "../modules/category/category.route";
+import { ServiceImageRoutes } from "../modules/serviceImage/serviceImage.route";
 
 const router = Router();
 
@@ -158,6 +159,10 @@ const moduleRoutes = [
   {
     path: "/category",
     router: CategoryRoutes,
+  },
+  {
+    path: "/serviceImage",
+    router: ServiceImageRoutes,
   },
 ];
 
