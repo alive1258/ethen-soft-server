@@ -145,6 +145,10 @@ const moduleRoutes = [
     path: "/pricing",
     router: PricingRoutes,
   },
+  {
+    path: "/feature-assigned-pricing",
+    router: PricingRoutes,
+  },
 ];
 
 moduleRoutes.forEach((route) => {

@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Route to create a new pricing
 router.post(
-  "/pricing",
+  "/",
   validateRequest(PricingValidation.createPricingValidationSchema),
   PricingController.createPricing
 );

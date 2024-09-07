@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Route to create a new pricing category
 router.post(
-  "/pricing-category",
+  "/",
   validateRequest(
     PricingCategoryValidation.createPricingCategoryValidationSchema
   ),

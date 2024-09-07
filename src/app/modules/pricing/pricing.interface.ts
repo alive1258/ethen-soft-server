@@ -2,6 +2,7 @@ import { Model, Types } from "mongoose";
 
 // defined the pricing type
 export interface TPricing {
+  id?: Types.ObjectId;
   title: string;
   price: string;
   category: Types.ObjectId;

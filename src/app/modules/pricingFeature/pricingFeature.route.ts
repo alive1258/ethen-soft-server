@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Route to create a new pricing feature
 router.post(
-  "/pricing-feature",
+  "/",
   validateRequest(
     PricingFeatureValidation.createPricingFeatureValidationSchema
   ),
