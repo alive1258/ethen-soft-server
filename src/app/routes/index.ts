@@ -27,6 +27,7 @@ import { AuthRoutes } from "../modules/auth/auth.route";
 import { PricingCategoryRoutes } from "../modules/pricingCategory/pricingCategory.route";
 import { PricingFeatureRoutes } from "../modules/pricingFeature/pricingFeature.route";
 import { PricingRoutes } from "../modules/pricing/pricing.route";
+import { ServiceRoutes } from "../modules/service/service.route";
 
 const router = Router();
 
@@ -148,6 +149,10 @@ const moduleRoutes = [
   {
     path: "/feature-assigned-pricing",
     router: PricingRoutes,
+  },
+  {
+    path: "/service",
+    router: ServiceRoutes,
   },
 ];
 
