@@ -1,2 +1,2 @@
-export const pricingFeaturesFilterableFields = ["name"];
-export const pricingFeaturesSearchableFields = ["searchTerm"];
+export const pricingFeaturesFilterableFields = ["searchTerm", "name"];
+export const pricingFeaturesSearchableFields = ["name"];

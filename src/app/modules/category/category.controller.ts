@@ -2,6 +2,9 @@ import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import { CategoryServices } from "./category.service";
+import pick from "../../utils/pick";
+import { categoryFilterableFields } from "./category.constant";
+import { paginationFields } from "../../constants/pagination";
 
 // Controller to handle category creation
 const createCategory = catchAsync(async (req, res) => {
@@ -19,7 +22,13 @@ const createCategory = catchAsync(async (req, res) => {
 
 // Controller to handle retrieving all category categories
 const getAllCategory = catchAsync(async (req, res) => {
-  const result = await CategoryServices.getAllCategoryFromDB();
+  const filters = pick(req.query, categoryFilterableFields);
+  const paginationOptions = pick(req.query, paginationFields);
+
+  const result = await CategoryServices.getAllCategoryFromDB(
+    filters,
+    paginationOptions
+  );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

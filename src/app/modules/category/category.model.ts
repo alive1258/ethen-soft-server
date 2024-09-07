@@ -15,12 +15,17 @@ const categorySchema = new Schema<TCategory, CategoryModel>(
       type: String,
       required: true,
     },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     logo: {
       type: String,
       required: true,
     },
     service: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       required: true,
       ref: "Service",
     },
@@ -29,6 +34,13 @@ const categorySchema = new Schema<TCategory, CategoryModel>(
     timestamps: true,
   }
 );
+
+categorySchema.pre("save", function (next) {
+  if (!this.slug) {
+    this.slug = this.name.toLowerCase().replace(/\s+/g, "-");
+  }
+  next();
+});
 
 export const Category = model<TCategory, CategoryModel>(
   "Category",

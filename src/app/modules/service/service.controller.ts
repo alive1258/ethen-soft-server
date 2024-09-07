@@ -4,6 +4,7 @@ import catchAsync from "../../utils/catchAsync";
 import pick from "../../utils/pick";
 import { paginationFields } from "../../constants/pagination";
 import { ServiceServices } from "./service.service";
+import { serviceFilterableFields } from "./service.constant";
 
 // Controller to handle service creation
 const createService = catchAsync(async (req, res) => {

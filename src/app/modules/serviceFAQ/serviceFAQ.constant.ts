@@ -1,2 +1,2 @@
-export const serviceFAQFilterableFields = ["service"];
-export const serviceFAQSearchableFields = ["searchTerm", "question", "answer"];
+export const serviceFAQFilterableFields = ["searchTerm", "service"];
+export const serviceFAQSearchableFields = ["question", "answer"];

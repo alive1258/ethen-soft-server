@@ -11,8 +11,12 @@ const serviceFAQSchema = new Schema<TServiceFAQ, serviceFAQModel>(
       type: String,
       required: true,
     },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
     service: {
-      type: mongoose.Types.ObjectId,
+      type: String,
       required: true,
       ref: "Service",
     },

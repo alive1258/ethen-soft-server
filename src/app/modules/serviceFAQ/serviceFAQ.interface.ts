@@ -5,7 +5,8 @@ export interface TServiceFAQ {
   _id?: Types.ObjectId;
   question: string;
   answer: string;
-  service: Types.ObjectId | TService;
+  service: string | TService;
+  isVerified: boolean;
 }
 
 export type serviceFAQModel = Model<TServiceFAQ, Record<string, unknown>>;

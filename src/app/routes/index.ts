@@ -139,11 +139,11 @@ const moduleRoutes = [
     router: TermsConditionRoutes,
   },
   {
-    path: "/pricing-category",
+    path: "/pricing-categories",
     router: PricingCategoryRoutes,
   },
   {
-    path: "/pricing-feature",
+    path: "/pricing-features",
     router: PricingFeatureRoutes,
   },
   {
@@ -155,11 +155,11 @@ const moduleRoutes = [
     router: PricingRoutes,
   },
   {
-    path: "/service",
+    path: "/services",
     router: ServiceRoutes,
   },
   {
-    path: "/category",
+    path: "/categories",
     router: CategoryRoutes,
   },
   {
@@ -167,7 +167,7 @@ const moduleRoutes = [
     router: ServiceImageRoutes,
   },
   {
-    path: "/service-faq",
+    path: "/service-faqs",
     router: ServiceFAQRoutes,
   },
   {

@@ -6,6 +6,7 @@ import { TService, TServiceFilters } from "./service.interface";
 import { Service } from "./service.mode";
 import httpStatus from "http-status";
 import ApiError from "../../../errors/ApiError";
+import { serviceSearchableFields } from "./service.constant";
 
 // Service to create a new service in the database
 const createServiceIntoDB = async (data: TService): Promise<TService> => {

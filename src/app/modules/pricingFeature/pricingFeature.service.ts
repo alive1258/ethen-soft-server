@@ -10,6 +10,7 @@ import { TGenericResponse } from "../../../interfaces/common";
 import { paginationHelpers } from "../../../helpers/paginationHelpers";
 import { customerFilterableFields } from "../customers/customer.constant";
 import { SortOrder } from "mongoose";
+import { pricingFeaturesFilterableFields } from "./pricingFeature.constant";
 
 // Service to create a new Pricing Feature in the database
 const createPricingFeatureIntoDB = async (
@@ -36,9 +37,10 @@ const getAllPricingFeatureFromDB = async (
   const andConditions: any[] = [];
 
   // Search term filter (e.g., for name or email)
+  console.log(searchTerm);
   if (searchTerm) {
     andConditions.push({
-      $or: customerFilterableFields.map((field) => ({
+      $or: pricingFeaturesFilterableFields.map((field) => ({
         [field]: {
           $regex: searchTerm,
           $options: "i",
