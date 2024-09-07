@@ -1,5 +1,2 @@
-export const featureAssignedPricingFilterableFields = [
-  "searchTerm",
-  "pricingId",
-];
+export const featureAssignedPricingFilterableFields = ["searchTerm", "pricing"];
 export const featureAssignedPricingSearchableFields = ["title", "price"];

@@ -3,8 +3,10 @@ import { z } from "zod";
 // Zod schema for Hero
 const createFeatureAssignedPricingValidationSchema = z.object({
   body: z.object({
-    pricing: z.string().trim().min(1, "Name is required"),
-    pricingFeature: z.string().trim().min(1, "Name is required"),
+    pricing: z.string({ required_error: "Pricing ID is required" }),
+    pricingFeature: z.string({
+      required_error: "Pricing feature ID is required",
+    }),
   }),
 });
 const updateFeatureAssignedPricingValidationSchema = z.object({

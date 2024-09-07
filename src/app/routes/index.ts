@@ -32,6 +32,7 @@ import { CategoryRoutes } from "../modules/category/category.route";
 import { ServiceImageRoutes } from "../modules/serviceImage/serviceImage.route";
 import { ServiceFAQRoutes } from "../modules/serviceFAQ/serviceFAQ.route";
 import { ClientReviewRoutes } from "../modules/clientReview/clientReview.route";
+import { FeatureAssignedPricingRoutes } from "../modules/FeatureAssignedPricing/FeatureAssignedPricing.route";
 
 const router = Router();
 
@@ -152,7 +153,7 @@ const moduleRoutes = [
   },
   {
     path: "/feature-assigned-pricing",
-    router: PricingRoutes,
+    router: FeatureAssignedPricingRoutes,
   },
   {
     path: "/services",

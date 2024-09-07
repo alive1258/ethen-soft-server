@@ -10,12 +10,12 @@ const featureAssignedPricingSchema = new Schema<
 >(
   {
     pricing: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       required: true,
       ref: "Pricing",
     },
     pricingFeature: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       required: true,
       ref: "PricingFeature",
     },
