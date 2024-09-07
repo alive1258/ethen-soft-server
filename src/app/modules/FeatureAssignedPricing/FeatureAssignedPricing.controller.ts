@@ -2,6 +2,9 @@ import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import { FeatureAssignedPricingServices } from "./FeatureAssignedPricing.service";
+import pick from "../../utils/pick";
+import { featureAssignedPricingFilterableFields } from "./FeatureAssignedPricing.constant";
+import { paginationFields } from "../../constants/pagination";
 
 // Controller to handle feature assigned to pricing creation
 const createFeatureAssignedPricing = catchAsync(async (req, res) => {
@@ -22,8 +25,13 @@ const createFeatureAssignedPricing = catchAsync(async (req, res) => {
 
 // Controller to handle retrieving all feature assigned to pricing
 const getAllFeatureAssignedPricing = catchAsync(async (req, res) => {
+  const filters = pick(req.query, featureAssignedPricingFilterableFields);
+  const paginationOptions = pick(req.query, paginationFields);
   const result =
-    await FeatureAssignedPricingServices.getAllFeatureAssignedPricingFromDB();
+    await FeatureAssignedPricingServices.getAllFeatureAssignedPricingFromDB(
+      filters,
+      paginationOptions
+    );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
