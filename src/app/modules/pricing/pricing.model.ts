@@ -12,12 +12,12 @@ const pricingSchema = new Schema<TPricing, PricingModel>(
       required: true,
     },
     service: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       required: true,
       ref: "Service",
     },
     pricingCategory: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       required: true,
       ref: "PricingCategory",
     },

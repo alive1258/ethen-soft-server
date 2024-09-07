@@ -19,7 +19,8 @@ const createPricing = catchAsync(async (req, res) => {
 
 // Controller to handle retrieving all pricing categories
 const getAllPricing = catchAsync(async (req, res) => {
-  const result = await PricingServices.getAllPricingFromDB();
+  const { service } = req.query;
+  const result = await PricingServices.getAllPricingFromDB(service);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

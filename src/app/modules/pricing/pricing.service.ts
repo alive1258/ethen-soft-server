@@ -11,8 +11,10 @@ const createPricingIntoDB = async (data: TPricing): Promise<TPricing> => {
 };
 
 // Service to retrieve all pricing  from the database
-const getAllPricingFromDB = async (): Promise<TPricing[]> => {
-  const result = await Pricing.find()
+const getAllPricingFromDB = async (service: any): Promise<TPricing[]> => {
+  const whereConditions = service ? { service: service } : {};
+
+  const result = await Pricing.find(whereConditions)
     .populate("service")
     .populate("pricingCategory");
   return result;

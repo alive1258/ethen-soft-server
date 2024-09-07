@@ -5,9 +5,8 @@ export interface TPricing {
   id?: Types.ObjectId;
   title: string;
   price: string;
-  category: Types.ObjectId;
-  service: Types.ObjectId;
-  pricingCategory: Types.ObjectId;
+  service: string;
+  pricingCategory: string;
 }
 
 // pricing model for using method and statics
