@@ -30,6 +30,7 @@ import { PricingRoutes } from "../modules/pricing/pricing.route";
 import { ServiceRoutes } from "../modules/service/service.route";
 import { CategoryRoutes } from "../modules/category/category.route";
 import { ServiceImageRoutes } from "../modules/serviceImage/serviceImage.route";
+import { ServiceFAQRoutes } from "../modules/serviceFAQ/serviceFAQ.route";
 
 const router = Router();
 
@@ -163,6 +164,10 @@ const moduleRoutes = [
   {
     path: "/serviceImage",
     router: ServiceImageRoutes,
+  },
+  {
+    path: "/service-faq",
+    router: ServiceFAQRoutes,
   },
 ];
 

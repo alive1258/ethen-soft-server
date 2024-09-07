@@ -69,14 +69,14 @@ const getAllPricingFeatureFromDB = async (
   const whereConditions =
     andConditions.length > 0 ? { $and: andConditions } : {};
 
-  // find  customers dat from db
+  // find  pricing feature data from database
   const result = await PricingFeature.find(whereConditions)
     .sort(sortConditions)
     .skip(skip)
     .limit(limit)
     .exec();
 
-  // count customers data
+  // count pricing feature data from database
   const total = await PricingFeature.countDocuments(whereConditions);
 
   return {
