@@ -68,6 +68,7 @@ const getAllServiceImageFromDB = async (
 
   // find  service image data from database
   const result = await ServiceImage.find(whereConditions)
+    .populate("service")
     .sort(sortConditions)
     .skip(skip)
     .limit(limit)

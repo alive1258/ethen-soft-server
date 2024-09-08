@@ -6,6 +6,7 @@ import { paginationHelpers } from "../../../helpers/paginationHelpers";
 import { SortOrder } from "mongoose";
 import { TServiceFAQ, TServiceFAQFilters } from "./serviceFAQ.interface";
 import { ServiceFAQ } from "./serviceFAQ.model";
+import { serviceFAQSearchableFields } from "./serviceFAQ.constant";
 
 // Service to create a new service faq in the database
 const createServiceFAQIntoDB = async (
@@ -34,7 +35,7 @@ const getAllServiceFAQFromDB = async (
   // Search term filter (e.g., for name or email)
   if (searchTerm) {
     andConditions.push({
-      $or: serviceSearchableFields.map((field) => ({
+      $or: serviceFAQSearchableFields.map((field) => ({
         [field]: {
           $regex: searchTerm,
           $options: "i",
@@ -67,6 +68,7 @@ const getAllServiceFAQFromDB = async (
 
   // find  service faq data from database
   const result = await ServiceFAQ.find(whereConditions)
+    .populate("service")
     .sort(sortConditions)
     .skip(skip)
     .limit(limit)
