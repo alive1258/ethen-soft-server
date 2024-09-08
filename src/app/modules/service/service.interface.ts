@@ -3,14 +3,17 @@ import { Model, Types } from "mongoose";
 // defined the type of service
 export type TService = {
   id?: Types.ObjectId;
-  name: string;
   title: string;
+  logo: string;
   slug: string;
   description: string;
-  logo: string;
+  subDescription: string;
+  colorCode: string;
+  metaDescription: string;
+  metaKey: string;
 };
 
-// created a model for useing method and statics
+// created a model for using method and statics
 export type ServiceModel = Model<TService, Record<string, unknown>>;
 
 export type TServiceFilters = {

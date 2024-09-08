@@ -4,12 +4,13 @@ import { TService } from "../service/service.interface";
 // declared category type
 export type TCategory = {
   id?: Types.ObjectId;
-  name: string;
   title: string;
-  description: string;
   slug: string;
+  description: string;
   logo: string;
-  service: Types.ObjectId | TService;
+  metaKey: string;
+  metaDescription: string;
+  service: string | TService;
 };
 
 // created model for using method or statics

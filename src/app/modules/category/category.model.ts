@@ -3,10 +3,6 @@ import { CategoryModel, TCategory } from "./category.interface";
 
 const categorySchema = new Schema<TCategory, CategoryModel>(
   {
-    name: {
-      type: String,
-      required: true,
-    },
     title: {
       type: String,
       required: true,
@@ -24,6 +20,14 @@ const categorySchema = new Schema<TCategory, CategoryModel>(
       type: String,
       required: true,
     },
+    metaKey: {
+      type: String,
+      required: true,
+    },
+    metaDescription: {
+      type: String,
+      required: true,
+    },
     service: {
       type: String,
       required: true,
@@ -34,13 +38,6 @@ const categorySchema = new Schema<TCategory, CategoryModel>(
     timestamps: true,
   }
 );
-
-categorySchema.pre("save", function (next) {
-  if (!this.slug) {
-    this.slug = this.name.toLowerCase().replace(/\s+/g, "-");
-  }
-  next();
-});
 
 export const Category = model<TCategory, CategoryModel>(
   "Category",

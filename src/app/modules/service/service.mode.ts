@@ -4,10 +4,6 @@ import { TService } from "./service.interface";
 // Define the service schema
 const serviceSchema = new Schema<TService>(
   {
-    name: {
-      type: String,
-      required: true,
-    },
     title: {
       type: String,
       required: true,
@@ -16,11 +12,27 @@ const serviceSchema = new Schema<TService>(
       type: String,
       required: true,
     },
+    subDescription: {
+      type: String,
+      required: true,
+    },
     slug: {
       type: String,
       required: true,
     },
     logo: {
+      type: String,
+      required: true,
+    },
+    metaDescription: {
+      type: String,
+      required: true,
+    },
+    metaKey: {
+      type: String,
+      required: true,
+    },
+    colorCode: {
       type: String,
       required: true,
     },
