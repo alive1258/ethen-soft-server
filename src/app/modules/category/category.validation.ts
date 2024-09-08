@@ -3,11 +3,14 @@ import { z } from "zod";
 // zod schema for create category
 const createCategoryValidationSchema = z.object({
   body: z.object({
-    name: z.string({ required_error: "Name is required" }),
     title: z.string({ required_error: "Title is required" }),
     description: z.string({ required_error: "Description is required" }),
     logo: z.string({ required_error: "Logo is required" }),
     service: z.string({ required_error: "Service ID is required" }),
+    metaKey: z.string({ required_error: "Meta Key is required" }),
+    metaDescription: z.string({
+      required_error: "Meta description is required",
+    }),
   }),
 });
 
