@@ -8,7 +8,7 @@ export type TUserName = {
 
 export type TUser = {
   _id?: Types.ObjectId;
-  id: string;
+  id?: string | undefined;
   name: TUserName;
   password: string;
   gender: "male" | "female" | "other";

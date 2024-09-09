@@ -16,6 +16,10 @@ const OTPVerificationSchema = new Schema<
   otp: {
     type: String,
     required: true,
+    trim: true,
+  },
+  role: {
+    type: String,
   },
   createdAt: {
     type: Date,

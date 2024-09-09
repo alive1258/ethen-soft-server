@@ -20,7 +20,7 @@ const userNameValidationSchema = z.object({
 // Zod schema for User
 const createUserValidationSchema = z.object({
   body: z.object({
-    id: z.string(),
+    id: z.string().optional(),
     name: userNameValidationSchema,
     password: z.string().min(6, "Password is required"),
     contactNo: z.string().min(1, "Contact number is required"),
