@@ -31,8 +31,10 @@ const loginUserService = async (
     customerData ||
     (await User.findOne(
       { email },
-      { _id: 1, email: 1, password: 1, role: 1 }
+      { _id: 1, email: 1, password: 1, role: 1, isEmailVerified: 1 }
     ).lean());
+
+  console.log(userData);
 
   // Throw an error if neither Customer nor User exists
   if (!userData) {
@@ -43,6 +45,11 @@ const loginUserService = async (
   const isPasswordMatched = await bcrypt.compare(password, userData.password);
   if (!isPasswordMatched) {
     throw new ApiError(httpStatus.UNAUTHORIZED, "Password is incorrect.");
+  }
+
+  // Throw an error if email is not verified.
+  if (!userData?.isEmailVerified) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "Email is not verified!");
   }
 
   // Generate an access token

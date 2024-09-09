@@ -24,6 +24,15 @@ import { BannerRoutes } from "../modules/banner/banner.route";
 import { CustomerRoutes } from "../modules/customers/customer.route";
 import { OTPVerificationRoute } from "../modules/OTPVerification/OTPVerification.route";
 import { AuthRoutes } from "../modules/auth/auth.route";
+import { PricingCategoryRoutes } from "../modules/pricingCategory/pricingCategory.route";
+import { PricingFeatureRoutes } from "../modules/pricingFeature/pricingFeature.route";
+import { PricingRoutes } from "../modules/pricing/pricing.route";
+import { ServiceRoutes } from "../modules/service/service.route";
+import { CategoryRoutes } from "../modules/category/category.route";
+import { ServiceImageRoutes } from "../modules/serviceImage/serviceImage.route";
+import { ServiceFAQRoutes } from "../modules/serviceFAQ/serviceFAQ.route";
+import { ClientReviewRoutes } from "../modules/clientReview/clientReview.route";
+import { FeatureAssignedPricingRoutes } from "../modules/FeatureAssignedPricing/FeatureAssignedPricing.route";
 
 const router = Router();
 
@@ -129,6 +138,42 @@ const moduleRoutes = [
   {
     path: "/terms-conditions",
     router: TermsConditionRoutes,
+  },
+  {
+    path: "/pricing-categories",
+    router: PricingCategoryRoutes,
+  },
+  {
+    path: "/pricing-features",
+    router: PricingFeatureRoutes,
+  },
+  {
+    path: "/pricing",
+    router: PricingRoutes,
+  },
+  {
+    path: "/feature-assigned-pricing",
+    router: FeatureAssignedPricingRoutes,
+  },
+  {
+    path: "/services",
+    router: ServiceRoutes,
+  },
+  {
+    path: "/categories",
+    router: CategoryRoutes,
+  },
+  {
+    path: "/service-images",
+    router: ServiceImageRoutes,
+  },
+  {
+    path: "/service-faqs",
+    router: ServiceFAQRoutes,
+  },
+  {
+    path: "/client-reviews",
+    router: ClientReviewRoutes,
   },
 ];
 

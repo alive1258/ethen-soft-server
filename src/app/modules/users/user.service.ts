@@ -7,6 +7,7 @@ import { User } from "./user.module";
 import { TGenericResponse } from "../../../interfaces/common";
 import ApiError from "../../../errors/ApiError";
 import httpStatus from "http-status";
+import { generateUserId } from "./user.utils";
 
 // Service to create a new user in the database
 const createUserIntoDB = async (userData: TUser) => {
@@ -18,6 +19,12 @@ const createUserIntoDB = async (userData: TUser) => {
   if (await User.isUserExists(userData.email)) {
     throw new ApiError(httpStatus.CONFLICT, "user already exist"); // Throw an error if the user already exists
   }
+
+  //generate custom id
+
+  const id = await generateUserId();
+
+  userData["id"] = id;
 
   // Create a new user in the database using the provided user data
   const result = await User.create(userData); // built in static methods
