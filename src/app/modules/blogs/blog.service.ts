@@ -17,8 +17,8 @@ const getAllBlogFromDB = async () => {
 };
 
 // Service to retrieve a single Blog from the database by ID
-const getSingleBlogFromDB = async (_id: string) => {
-  const result = await Blog.findOne({ _id });
+const getSingleBlogFromDB = async (slug: string) => {
+  const result = await Blog.findOne({ slug });
   return result;
 };
 
