@@ -8,6 +8,10 @@ import httpStatus from "http-status";
 import { Customer } from "../customers/customer.module";
 import { User } from "../users/user.module";
 import mongoose, { Types } from "mongoose";
+import { AuthService } from "../auth/auth.service";
+import { jwtHelpers } from "../../../helpers/jwtHelpers";
+import { Secret } from "jsonwebtoken";
+import { TLoginUserResponse } from "../auth/auth.interface";
 
 // OTP send on the email service
 const sendOTPVerificationEmail = async (_id: Types.ObjectId, email: string) => {
@@ -50,7 +54,10 @@ const sendOTPVerificationEmail = async (_id: Types.ObjectId, email: string) => {
 };
 
 // verify OTP service
-const verifyOTP = async (userId: any, otp: string, role: string) => {
+const verifyOTP = async (
+  userId: any,
+  otp: string
+): Promise<TLoginUserResponse> => {
   // check user recently create an account
   if (!userId) {
     throw new ApiError(
@@ -58,6 +65,26 @@ const verifyOTP = async (userId: any, otp: string, role: string) => {
       "Empty otp details are not allowed."
     );
   }
+  // Find the user by email in both Customer and User collections
+  const customerData = await Customer.findOne(
+    { _id: userId },
+    { _id: 1, email: 1, password: 1, role: 1 }
+  ).lean();
+
+  const userData =
+    customerData ||
+    (await User.findOne(
+      { _id: userId },
+      { _id: 1, email: 1, password: 1, role: 1, isEmailVerified: 1 }
+    ).lean());
+
+  // Throw an error if neither Customer nor User exists
+  if (!userData) {
+    throw new ApiError(httpStatus.NOT_FOUND, "User does not exist.");
+  }
+
+  const { _id, role } = userData;
+
   // find the OTP verification data from database
   const UserOTPVerificationRecords = await OTPVerification.find({ userId });
 
@@ -98,18 +125,33 @@ const verifyOTP = async (userId: any, otp: string, role: string) => {
     await OTPVerification.deleteMany({ userId });
 
     // get the customer from database for response
-    const user = await Customer.findById({ _id: userId }, { password: 0 });
-    return user;
   } else {
     // update user
     await User.updateOne({ _id: userId }, { isEmailVerified: true });
     // delete the otp verification data from database
     await OTPVerification.deleteMany({ userId });
-
-    // get the user from database for response
-    const user = await User.findById({ _id: userId }, { password: 0 });
-    return user;
   }
+
+  // login user
+  // Generate an access token
+  const accessToken = jwtHelpers.createToken(
+    { _id, role },
+    config.jwt.secret as Secret,
+    config.jwt.expires_in as string
+  );
+
+  // Generate a refresh token
+  const refreshToken = jwtHelpers.createToken(
+    { _id, role },
+    config.jwt.refresh_secret as Secret,
+    config.jwt.refresh_expires_in as string
+  );
+
+  // Return the access and refresh tokens
+  return {
+    accessToken,
+    refreshToken,
+  };
 };
 
 const resendOTPVerification = async (userId: Types.ObjectId, email: string) => {

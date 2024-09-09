@@ -3,18 +3,30 @@ import catchAsync from "../../utils/catchAsync";
 import { OTPVerificationService } from "./OTPVerification.service";
 import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
+import { TLoginUserResponse } from "../auth/auth.interface";
+import config from "../../config";
 
 // verify OTP controller
 const verifyOTP = catchAsync(async (req: Request, res: Response) => {
-  const { userId, otp, role } = req.body;
-  const result = await OTPVerificationService.verifyOTP(userId, otp, role);
+  const { userId, otp } = req.body;
+  const result = await OTPVerificationService.verifyOTP(userId, otp);
 
-  // Respond with a success message and the retrieved OTP verification data
-  sendResponse(res, {
+  //   destructuring refresh token to set cookie
+  const { refreshToken, ...others } = result;
+  // set refresh token into cookie
+  const cookieOptions = {
+    secure: config.env === "production",
+    httpOnly: true,
+  };
+
+  res.cookie("refreshToken", refreshToken, cookieOptions);
+
+  // pass data to frontend
+  sendResponse<TLoginUserResponse>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "User email verified successfully.",
-    data: result,
+    message: "User logged in successfully.",
+    data: others,
   });
 });
 const resendOTPVerification = catchAsync(
