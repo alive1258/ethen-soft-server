@@ -7,6 +7,12 @@ const serviceSchema = new Schema<TService>(
     title: {
       type: String,
       required: true,
+      unique: true,
+    },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
     },
     description: {
       type: String,
@@ -16,10 +22,7 @@ const serviceSchema = new Schema<TService>(
       type: String,
       required: true,
     },
-    slug: {
-      type: String,
-      required: true,
-    },
+
     logo: {
       type: String,
       required: true,

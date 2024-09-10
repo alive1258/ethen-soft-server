@@ -35,14 +35,11 @@ const loginUserService = async (
       { _id: 1, email: 1, password: 1, role: 1, isEmailVerified: 1 }
     ).lean());
 
-  console.log(userData);
-
   // Throw an error if neither Customer nor User exists
   if (!userData) {
     throw new ApiError(httpStatus.NOT_FOUND, "User does not exist.");
   }
 
-  console.log(password);
   // Compare the provided password with the stored hashed password
   const isPasswordMatched = await bcrypt.compare(password, userData.password);
   if (!isPasswordMatched) {
