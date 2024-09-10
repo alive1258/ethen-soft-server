@@ -37,7 +37,6 @@ const getAllPricingFeatureFromDB = async (
   const andConditions: any[] = [];
 
   // Search term filter (e.g., for name or email)
-  console.log(searchTerm);
   if (searchTerm) {
     andConditions.push({
       $or: pricingFeaturesFilterableFields.map((field) => ({
