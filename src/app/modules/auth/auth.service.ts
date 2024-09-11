@@ -7,12 +7,13 @@ import {
 } from "./auth.interface";
 import bcrypt from "bcrypt";
 import config from "../../config";
-import { Secret } from "jsonwebtoken";
+import { JwtPayload, Secret } from "jsonwebtoken";
 import { ENUM_ROLE } from "../../../enums/user";
 import { User } from "../users/user.module";
 import { jwtHelpers } from "../../../helpers/jwtHelpers";
 import { TUser } from "../users/user.interface";
 import { Customer } from "../customers/customer.module";
+import { OTPVerificationService } from "../OTPVerification/OTPVerification.service";
 
 // Service to handle user login
 const loginUserService = async (
@@ -33,8 +34,6 @@ const loginUserService = async (
       { email },
       { _id: 1, email: 1, password: 1, role: 1, isEmailVerified: 1 }
     ).lean());
-
-  console.log(userData);
 
   // Throw an error if neither Customer nor User exists
   if (!userData) {
@@ -124,8 +123,63 @@ const refreshTokenService = async (
   };
 };
 
+const forgetPasswordService = async (email: string) => {
+  if (!email) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Email not Found!");
+  }
+  //  try to find the customer data from database
+  const customerData = await Customer.findOne(
+    { email },
+    { _id: 1, email: 1 }
+  ).lean();
+
+  //   if customer data is not available then find user data from database
+  const userData =
+    customerData ||
+    (await User.findOne({ email }, { _id: 1, email: 1 }).lean());
+
+  // check the user is available or not
+  if (!userData) {
+    throw new ApiError(httpStatus.NOT_FOUND, "User does not exist.");
+  }
+  const result = await OTPVerificationService.sendOTPVerificationEmail(
+    userData?._id,
+    userData?.email
+  );
+
+  return result;
+};
+
+//reset password
+
+const resetPasswordService = async (
+  user: JwtPayload | null,
+  newPassword: string
+): Promise<TLoginUserResponse> => {
+  //  try to find the customer data from database
+  const customerData = await Customer.findOne({ _id: user?._id });
+
+  //   if customer data is not available then find user data from database
+  const userData = customerData || (await User.findOne({ _id: user?._id }));
+
+  // check the user is available or not
+  if (!userData) {
+    throw new ApiError(httpStatus.NOT_FOUND, "User does not exist.");
+  }
+
+  userData.password = newPassword;
+  await userData.save();
+
+  const loginData = { email: userData?.email, password: newPassword };
+  const result = await loginUserService(loginData);
+
+  return result;
+};
+
 // export auth service as object
 export const AuthService = {
   loginUserService,
   refreshTokenService,
+  forgetPasswordService,
+  resetPasswordService,
 };

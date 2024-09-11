@@ -2,6 +2,9 @@ import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import { PricingServices } from "./pricing.service";
+import { pricingFilterableFields } from "./pricing.constant";
+import { paginationFields } from "../../constants/pagination";
+import pick from "../../utils/pick";
 
 // Controller to handle Pricing creation
 const createPricing = catchAsync(async (req, res) => {
@@ -19,8 +22,12 @@ const createPricing = catchAsync(async (req, res) => {
 
 // Controller to handle retrieving all pricing categories
 const getAllPricing = catchAsync(async (req, res) => {
-  const { service } = req.query;
-  const result = await PricingServices.getAllPricingFromDB(service);
+  const filters = pick(req.query, pricingFilterableFields);
+  const paginationOptions = pick(req.query, paginationFields);
+  const result = await PricingServices.getAllPricingFromDB(
+    filters,
+    paginationOptions
+  );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

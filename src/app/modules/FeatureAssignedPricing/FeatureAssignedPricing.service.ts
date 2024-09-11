@@ -78,6 +78,8 @@ const getAllFeatureAssignedPricingFromDB = async (
 
   // find  feature assigned to pricing data from database
   const result = await FeatureAssignedPricing.find(whereConditions)
+    .populate("pricing")
+    .populate("pricingFeature")
     .sort(sortConditions)
     .skip(skip)
     .limit(limit)

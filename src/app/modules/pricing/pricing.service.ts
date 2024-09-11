@@ -1,7 +1,12 @@
 import httpStatus from "http-status";
 import ApiError from "../../../errors/ApiError";
-import { TPricing } from "./pricing.interface";
+import { TPricing, TPricingFilters } from "./pricing.interface";
 import { Pricing } from "./pricing.model";
+import { SortOrder } from "mongoose";
+import { pricingSearchableFields } from "./pricing.constant";
+import { paginationHelpers } from "../../../helpers/paginationHelpers";
+import { TGenericResponse } from "../../../interfaces/common";
+import { TPaginationOptions } from "../../../interfaces/pagination";
 
 // Service to create a new Pricing  in the database
 const createPricingIntoDB = async (data: TPricing): Promise<TPricing> => {
@@ -11,13 +16,76 @@ const createPricingIntoDB = async (data: TPricing): Promise<TPricing> => {
 };
 
 // Service to retrieve all pricing  from the database
-const getAllPricingFromDB = async (service: any): Promise<TPricing[]> => {
-  const whereConditions = service ? { service: service } : {};
+const getAllPricingFromDB = async (
+  filters: TPricingFilters,
+  paginationOptions: TPaginationOptions
+): Promise<TGenericResponse<TPricing[]>> => {
+  // destructuring filters
+  const { searchTerm, ...filtersData } = filters;
 
+  //   destructuring all pagination dependencies
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelpers.calculatePagination(paginationOptions);
+
+  //andConditions used for containing all query to get data from database
+  const andConditions: any[] = [];
+
+  // Search term filter (e.g., for name or email)
+  if (searchTerm) {
+    andConditions.push({
+      $or: pricingSearchableFields.map((field) => ({
+        [field]: {
+          $regex: searchTerm,
+          $options: "i",
+        },
+      })),
+    });
+  }
+
+  // Additional filters
+  if (Object.keys(filtersData).length) {
+    andConditions.push({
+      $and: Object.entries(filtersData).map(([field, value]) => ({
+        [field]: {
+          $regex: `^${value}$`,
+          $options: "i",
+        },
+      })),
+    });
+  }
+
+  // Sorting conditions
+  const sortConditions: { [key: string]: SortOrder } = {};
+  if (sortBy && sortOrder) {
+    sortConditions[sortBy] = sortOrder;
+  }
+
+  console.log(sortConditions);
+
+  // Applying conditions
+  const whereConditions =
+    andConditions.length > 0 ? { $and: andConditions } : {};
+
+  // find  pricing feature data from database
   const result = await Pricing.find(whereConditions)
     .populate("service")
-    .populate("pricingCategory");
-  return result;
+    .populate("pricingCategory")
+    .skip(skip)
+    .sort(sortConditions)
+    .limit(limit)
+    .exec();
+
+  // count pricing feature data from database
+  const total = await Pricing.countDocuments(whereConditions);
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: result,
+  };
 };
 
 // Service to retrieve a single pricing  from the database by ID

@@ -86,9 +86,9 @@ const getAllServiceFromDB = async (
 
 // Service to retrieve a single service from the database by ID
 const getSingleServiceFromDB = async (
-  _id: string
+  slug: string
 ): Promise<TService | null> => {
-  const result = await Service.findOne({ _id });
+  const result = await Service.findOne({ slug });
   return result;
 };
 
