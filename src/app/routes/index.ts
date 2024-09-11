@@ -33,6 +33,7 @@ import { ServiceImageRoutes } from "../modules/serviceImage/serviceImage.route";
 import { ServiceFAQRoutes } from "../modules/serviceFAQ/serviceFAQ.route";
 import { ClientReviewRoutes } from "../modules/clientReview/clientReview.route";
 import { FeatureAssignedPricingRoutes } from "../modules/FeatureAssignedPricing/FeatureAssignedPricing.route";
+import { RefundPolicyRoutes } from "../modules/refundPolicy/refundPolicy.route";
 
 const router = Router();
 
@@ -134,6 +135,10 @@ const moduleRoutes = [
   {
     path: "/privacy-policies",
     router: PrivacyPolicyRoutes,
+  },
+  {
+    path: "/refund-policies",
+    router: RefundPolicyRoutes,
   },
   {
     path: "/terms-conditions",
