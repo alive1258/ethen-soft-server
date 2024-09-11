@@ -59,9 +59,6 @@ const getAllPricingFromDB = async (
   if (sortBy && sortOrder) {
     sortConditions[sortBy] = sortOrder;
   }
-
-  console.log(sortConditions);
-
   // Applying conditions
   const whereConditions =
     andConditions.length > 0 ? { $and: andConditions } : {};

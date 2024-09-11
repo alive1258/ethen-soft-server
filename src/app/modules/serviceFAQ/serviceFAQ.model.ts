@@ -3,11 +3,11 @@ import { serviceFAQModel, TServiceFAQ } from "./serviceFAQ.interface";
 
 const serviceFAQSchema = new Schema<TServiceFAQ, serviceFAQModel>(
   {
-    question: {
+    title: {
       type: String,
       required: true,
     },
-    answer: {
+    description: {
       type: String,
       required: true,
     },

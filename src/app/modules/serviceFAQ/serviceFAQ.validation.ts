@@ -10,8 +10,8 @@ const createServiceFAQValidationSchema = z.object({
 });
 const updateServiceFAQValidationSchema = z.object({
   body: z.object({
-    question: z.string().optional(),
-    answer: z.string().optional(),
+    title: z.string().optional(),
+    description: z.string().optional(),
     service: z.string().optional(),
   }),
 });

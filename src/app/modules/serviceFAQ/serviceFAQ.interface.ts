@@ -3,8 +3,8 @@ import { TService } from "../service/service.interface";
 
 export interface TServiceFAQ {
   _id?: Types.ObjectId;
-  question: string;
-  answer: string;
+  title: string;
+  description: string;
   service: string | TService;
   isVerified: boolean;
 }
