@@ -1,5 +1,5 @@
 export type TBanner = {
-    name: string;
-    image: string;
-  };
-  
+  title: string;
+  slug: string;
+  image: string;
+};

@@ -4,7 +4,11 @@ import { TBanner } from "./banner.interface";
 // Define the bannerSchema
 const bannerSchema = new Schema<TBanner>(
   {
-    name: {
+    title: {
+      type: String,
+      required: true,
+    },
+    slug: {
       type: String,
       required: true,
     },

@@ -8,6 +8,10 @@ const blogSchema = new Schema<TBlog>(
       type: String,
       required: true,
     },
+    slug: {
+      type: String,
+      required: true,
+    },
     subject: {
       type: String,
       required: true,
