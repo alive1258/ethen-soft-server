@@ -17,8 +17,8 @@ const getAllOurProductFromDB = async () => {
 };
 
 // Product to retrieve a single OurProduct from the database by ID
-const getSingleOurProductFromDB = async (_id: string) => {
-  const result = await OurProduct.findOne({ _id });
+const getSingleOurProductFromDB = async (slug: string) => {
+  const result = await OurProduct.findOne({ slug });
   return result;
 };
 

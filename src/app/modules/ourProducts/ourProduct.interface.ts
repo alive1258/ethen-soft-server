@@ -1,7 +1,11 @@
 export type TOurProduct = {
   title: string;
-  sub_title: string;
-  tech: string;
+  slug: string;
+  sub_description: string;
   description: string;
+  icon: string;
   image: string;
+  color_code: string;
+  meta_key: string;
+  meta_description: string;
 };

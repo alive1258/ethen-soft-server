@@ -12,6 +12,10 @@ const trustUsSchema = new Schema<TTeam>(
       type: String,
       required: true,
     },
+    linked_in_url: {
+      type: String,
+      required: true,
+    },
     image: {
       type: String,
       required: true,
