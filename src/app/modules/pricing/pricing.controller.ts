@@ -24,6 +24,7 @@ const createPricing = catchAsync(async (req, res) => {
 const getAllPricing = catchAsync(async (req, res) => {
   const filters = pick(req.query, pricingFilterableFields);
   const paginationOptions = pick(req.query, paginationFields);
+
   const result = await PricingServices.getAllPricingFromDB(
     filters,
     paginationOptions

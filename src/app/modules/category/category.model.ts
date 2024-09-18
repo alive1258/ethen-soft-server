@@ -7,7 +7,7 @@ const categorySchema = new Schema<TCategory, CategoryModel>(
       type: String,
       required: true,
     },
-    description: {
+    subDescription: {
       type: String,
       required: true,
     },

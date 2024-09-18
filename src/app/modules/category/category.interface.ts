@@ -6,7 +6,7 @@ export type TCategory = {
   id?: Types.ObjectId;
   title: string;
   slug: string;
-  description: string;
+  subDescription: string;
   logo: string;
   metaKey: string;
   metaDescription: string;
