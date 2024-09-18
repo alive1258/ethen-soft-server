@@ -7,7 +7,8 @@ import cookieParser from "cookie-parser";
 
 const app: Application = express();
 
-// parsers
+// parsers update
+// uopdte
 
 
 // app.use(cors({ origin: "http://localhost:3000", credentials: true }));

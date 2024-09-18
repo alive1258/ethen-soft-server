@@ -8,8 +8,15 @@ const ourProductSchema = new Schema<TOurProduct>(
       type: String,
       required: true,
     },
-
-    sub_title: {
+    slug: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    sub_description: {
       type: String,
       required: true,
     },
@@ -18,13 +25,19 @@ const ourProductSchema = new Schema<TOurProduct>(
       type: String,
       required: true,
     },
-    description: {
+    icon: {
       type: String,
       required: true,
     },
-    tech: {
+    color_code: {
       type: String,
       required: true,
+    },
+    meta_key: {
+      type: String,
+    },
+    meta_description: {
+      type: String,
     },
   },
   {
