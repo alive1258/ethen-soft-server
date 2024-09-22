@@ -8,17 +8,13 @@ import cookieParser from "cookie-parser";
 const app: Application = express();
 
 // parsers
-<<<<<<< HEAD
-app.use(cors());
-=======
 
+app.use(cors());
 
 // app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
 app.use(cors());
 
-
->>>>>>> 497408e855328b941e4c6fad4b41d6cc3c5e1047
 // cookie parser for grave cookie
 app.use(cookieParser());
 
