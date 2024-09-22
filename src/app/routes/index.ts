@@ -33,6 +33,7 @@ import { ServiceImageRoutes } from "../modules/serviceImage/serviceImage.route";
 import { ServiceFAQRoutes } from "../modules/serviceFAQ/serviceFAQ.route";
 import { ClientReviewRoutes } from "../modules/clientReview/clientReview.route";
 import { FeatureAssignedPricingRoutes } from "../modules/FeatureAssignedPricing/FeatureAssignedPricing.route";
+import { ContactUsRoutes } from "../modules/contactUs/contactUs.route";
 
 const router = Router();
 
@@ -174,6 +175,10 @@ const moduleRoutes = [
   {
     path: "/client-reviews",
     router: ClientReviewRoutes,
+  },
+  {
+    path: "/contact-us",
+    router: ContactUsRoutes,
   },
 ];
 
