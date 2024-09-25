@@ -9,11 +9,9 @@ const app: Application = express();
 
 // parsers
 
-app.use(cors());
+// app.use(cors());
 
-// app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-
-app.use(cors());
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
 // cookie parser for grave cookie
 app.use(cookieParser());

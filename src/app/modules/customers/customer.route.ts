@@ -2,6 +2,8 @@ import express from "express";
 import { CustomerController } from "./customer.controller";
 import { CustomerValidation } from "./customer.validation";
 import validateRequest from "../../middleware/validateRequest";
+import auth from "../../middleware/auth";
+import { ENUM_ROLE } from "../../../enums/user";
 
 const router = express.Router();
 
@@ -13,19 +15,19 @@ router.post(
 );
 
 //get all customers route
-router.get(
-  "/",
-  //   auth(ENUM_ROLE.SUPER_ADMIN, ENUM_ROLE.ADMIN, ENUM_ROLE.USER),
-  CustomerController.getAllCustomers
-);
+router.get("/", CustomerController.getAllCustomers);
 
 //get single customer route
-router.get("/:id", CustomerController.getSingleCustomer);
+router.get(
+  "/:id",
+  auth(ENUM_ROLE.SUPER_ADMIN, ENUM_ROLE.ADMIN),
+  CustomerController.getSingleCustomer
+);
 
 //update single customer route
 router.patch(
   "/:id",
-  // auth(ENUM_ROLE.SUPER_ADMIN, ENUM_ROLE.ADMIN, ENUM_ROLE.USER),
+  auth(ENUM_ROLE.SUPER_ADMIN, ENUM_ROLE.ADMIN, ENUM_ROLE.CUSTOMER),
   validateRequest(CustomerValidation.updateCustomerValidationSchema),
   CustomerController.updateCustomer
 );
@@ -33,7 +35,7 @@ router.patch(
 // delete single customer route
 router.delete(
   "/:id",
-  //   auth(ENUM_ROLE.SUPER_ADMIN, ENUM_ROLE.ADMIN),
+  auth(ENUM_ROLE.SUPER_ADMIN, ENUM_ROLE.ADMIN),
   CustomerController.deleteSingleCustomer
 );
 
