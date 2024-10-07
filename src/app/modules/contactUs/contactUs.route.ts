@@ -18,7 +18,6 @@ router.post(
 router.get(
   "/",
 
-  //   auth(ENUM_ROLE.ADMIN, ENUM_ROLE.SUPER_ADMIN),
   ContactUsController.getAllContactUs
 );
 
@@ -28,7 +27,7 @@ router.get("/:id", ContactUsController.getSingleContactUs);
 // Route to update a contactUs by ID
 router.patch(
   "/:id",
-  //   auth(ENUM_ROLE.ADMIN, ENUM_ROLE.SUPER_ADMIN),
+  auth(ENUM_ROLE.ADMIN, ENUM_ROLE.SUPER_ADMIN),
   validateRequest(ContactUsValidation.updateContactUsSchema),
   ContactUsController.updateContactUs
 );
@@ -36,7 +35,7 @@ router.patch(
 // Route to delete a contactUs by ID
 router.delete(
   "/:id",
-  //   auth(ENUM_ROLE.ADMIN, ENUM_ROLE.SUPER_ADMIN),
+  auth(ENUM_ROLE.ADMIN, ENUM_ROLE.SUPER_ADMIN),
   ContactUsController.deleteContactUs
 );
 

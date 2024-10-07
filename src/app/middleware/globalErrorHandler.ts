@@ -6,6 +6,7 @@ import { ZodError } from "zod";
 import handleZodError from "../../errors/handleZodError";
 import handleCastError from "../../errors/handleCastError";
 import ApiError from "../../errors/ApiError";
+import { TokenExpiredError } from "jsonwebtoken"; // Import the TokenExpiredError
 
 // global error handler function
 const globalErrorHandler: ErrorRequestHandler = (
@@ -16,36 +17,38 @@ const globalErrorHandler: ErrorRequestHandler = (
 ) => {
   config.env === "development"
     ? console.log("globalErrorHandler", error)
-    : console.log("globalErrorHanler", error);
+    : console.log("globalErrorHandler", error);
 
   let statusCode = 500;
-  let message = "Something went wrong !";
+  let message = "Something went wrong!";
   let errorMessages: TGenericErrorMessage[] = [];
 
-  if (error?.name === "ValidationError") {
-    // catch validation error functionality
+  if (error instanceof TokenExpiredError) {
+    // Handle token expired error
+    statusCode = 403; // Set the desired status code
+    message = "Token has expired. Please log in again.";
+    errorMessages = [
+      {
+        path: "",
+        message: message,
+      },
+    ];
+  } else if (error?.name === "ValidationError") {
     const simplifiedError = handleValidationError(error);
-    // set errors into variabls
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
     errorMessages = simplifiedError.errorMessages;
   } else if (error instanceof ZodError) {
-    // catch ZOD error functionality
     const simplifiedError = handleZodError(error);
-    // set errors into variabls
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
     errorMessages = simplifiedError.errorMessages;
   } else if (error?.name === "CastError") {
-    // catch cast errors
     const simplifiedError = handleCastError(error);
-
-    // set errors into variabls
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
     errorMessages = simplifiedError.errorMessages;
   } else if (error instanceof ApiError) {
-    // set errors into variabls for api error.
     statusCode = error?.statusCode;
     message = error.message;
     errorMessages = error.message
@@ -57,7 +60,6 @@ const globalErrorHandler: ErrorRequestHandler = (
         ]
       : [];
   } else if (error instanceof Error) {
-    // catch our throwable custom error and set into variables.
     message = error?.message;
     errorMessages = error?.message
       ? [
@@ -69,7 +71,6 @@ const globalErrorHandler: ErrorRequestHandler = (
       : [];
   }
 
-  // send response to the frontend .
   res.status(statusCode).json({
     success: false,
     message,

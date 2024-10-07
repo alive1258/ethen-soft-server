@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Query, Schema, model } from "mongoose";
 import { TUser, UserModel, TUserName } from "./user.interface";
 import bcrypt from "bcrypt";
 import config from "../../config";
@@ -77,9 +77,7 @@ const userSchema = new Schema<TUser, UserModel>(
   },
 
   {
-    toJSON: {
-      virtuals: true,
-    },
+    timestamps: true,
   }
 );
 
@@ -107,33 +105,25 @@ userSchema.pre("save", async function (next) {
 
 // Post-save middleware to remove the password field from the saved document
 userSchema.post<TUser>("save", async function (doc, next) {
-  doc.password = ""; // Remove the password field from the response after saving
+  doc.password = "";
   next();
 });
 
 // Pre-find middleware to automatically exclude soft-deleted users from query results
-userSchema.pre("find", function (next) {
-  this.find({
-    isDeleted: { $ne: true }, // Exclude users where isDeleted is true
-  });
-
+userSchema.pre<Query<TUser & Document, TUser>>("find", function (next) {
+  this.where({ isDeleted: { $ne: true } }).select("-password");
   next();
 });
 
 // Pre-findOne middleware to automatically exclude soft-deleted users from single record queries
-userSchema.pre("findOne", function (next) {
-  this.find({
-    isDeleted: { $ne: true }, // Exclude users where isDeleted is true
-  });
-
+userSchema.pre<Query<TUser & Document, TUser>>("findOne", function (next) {
+  this.where({ isDeleted: { $ne: true } }).select("-password");
   next();
 });
 
 // Pre-aggregate middleware to automatically exclude soft-deleted users in aggregation queries
 userSchema.pre("aggregate", function (next) {
-  // Add a $match stage at the start of the aggregation pipeline to exclude deleted users
   this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
-
   next();
 });
 

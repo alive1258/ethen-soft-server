@@ -7,23 +7,32 @@ import { TGenericResponse } from "../../../interfaces/common";
 import { paginationHelpers } from "../../../helpers/paginationHelpers";
 import { SortOrder } from "mongoose";
 import { customerFilterableFields } from "./customer.constant";
+import { ENUM_ROLE } from "../../../enums/user";
+import { generateCustomerId } from "../users/user.utils";
 
 const createCustomerIntoDB = async (
   customer: TCustomer
 ): Promise<TCustomer | null> => {
-  //set customer role and set initial isEmailVerified to false
-  if (customer) {
-    customer.role = "customer";
+  // set initial isEmailVerified to false
+  if (customer?.isEmailVerified) {
     customer.isEmailVerified = false;
   }
 
-  // check that the customer is already exist or not
-  const isCustomerExist = await Customer.findOne({ email: customer.email });
-  if (isCustomerExist) {
-    throw new ApiError(httpStatus.BAD_REQUEST, "Email is already used!");
+  if (customer) {
+    customer.role = ENUM_ROLE.CUSTOMER;
+  }
+  // Check if a user with the given email already exists
+  if (await Customer.findOne({ email: customer.email })) {
+    throw new ApiError(httpStatus.CONFLICT, "Customer already exist");
   }
 
-  // save customer to database
+  //generate custom id
+
+  const id = await generateCustomerId();
+
+  customer["id"] = id;
+
+  // Create a new user in the database using the provided user data
   const result = await Customer.create(customer);
 
   return result;

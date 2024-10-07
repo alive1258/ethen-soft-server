@@ -3,8 +3,9 @@ import { z } from "zod";
 // Zod schema for OTPVerification
 const createOTPVerificationZodSchema = z.object({
   body: z.object({
-    userId: z.string(), // Assuming ObjectId is represented as a string
+    userId: z.string(),
     otp: z.string().trim(),
+    email: z.string().optional(),
     role: z.string().optional(),
     createdAt: z.date().optional(),
     expiresAt: z.date().optional(),
