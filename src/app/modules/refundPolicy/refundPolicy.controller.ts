@@ -3,7 +3,7 @@ import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import { RefundPolicyServices } from "./refundPolicy.service";
 
-// Controller to handle RefundPolicy creation
+// Controller to handle RefundPolicy creation acrate
 const createRefundPolicy = catchAsync(async (req, res) => {
   const trustUsData = req.body;
 

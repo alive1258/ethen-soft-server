@@ -7,7 +7,7 @@ import { ENUM_ROLE } from "../../../enums/user";
 
 const router = express.Router();
 
-// Route to create a new technology
+// Route to create a new technology☺
 router.post(
   "/create-banner",
   auth(ENUM_ROLE.SUPER_ADMIN, ENUM_ROLE.ADMIN),
