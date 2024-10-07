@@ -7,8 +7,7 @@ import ApiError from "../../../errors/ApiError";
 import httpStatus from "http-status";
 import { Customer } from "../customers/customer.module";
 import { User } from "../users/user.module";
-import mongoose, { Types } from "mongoose";
-import { AuthService } from "../auth/auth.service";
+import { Types } from "mongoose";
 import { jwtHelpers } from "../../../helpers/jwtHelpers";
 import { Secret } from "jsonwebtoken";
 import { TLoginUserResponse } from "../auth/auth.interface";
@@ -37,6 +36,7 @@ const sendOTPVerificationEmail = async (_id: Types.ObjectId, email: string) => {
     const data: TOTPVerification = {
       userId: _id,
       otp: hashedOTP,
+      email: email,
       createdAt: new Date(),
       expiresAt: new Date(Date.now() + Number(config.email_expired_time)),
     };

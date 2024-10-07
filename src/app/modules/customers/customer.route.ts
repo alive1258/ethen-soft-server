@@ -18,11 +18,7 @@ router.post(
 router.get("/", CustomerController.getAllCustomers);
 
 //get single customer route
-router.get(
-  "/:id",
-  auth(ENUM_ROLE.SUPER_ADMIN, ENUM_ROLE.ADMIN),
-  CustomerController.getSingleCustomer
-);
+router.get("/:id", CustomerController.getSingleCustomer);
 
 //update single customer route
 router.patch(

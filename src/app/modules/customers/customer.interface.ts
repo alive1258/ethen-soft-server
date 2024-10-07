@@ -18,6 +18,7 @@ export type TCustomer = {
   isEmailVerified: boolean;
   profileImage?: string;
   isDeleted: boolean;
+  isClient: boolean;
 };
 
 // for crating static
@@ -32,4 +33,5 @@ export type TCustomerFilters = {
   name?: string;
   email?: string;
   role?: number;
+  isClient?: boolean;
 };

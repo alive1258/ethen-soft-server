@@ -31,7 +31,6 @@ const customerSchema = new Schema<TCustomer, CustomerModel>(
     id: {
       type: String,
       unique: true,
-      required: true,
     },
     name: {
       type: customerNameSchema,
@@ -50,28 +49,40 @@ const customerSchema = new Schema<TCustomer, CustomerModel>(
       type: Boolean,
       default: false,
     },
-    contactNo: { type: String, required: true },
+    contactNo: {
+      type: String,
+      required: true,
+    },
     gender: {
       type: String,
       trim: true,
       enum: ["male", "female", "other"],
       required: true,
     },
-    email: { type: String, trim: true, required: true, unique: true },
-    profileImage: { type: String },
+    email: {
+      type: String,
+      trim: true,
+      required: true,
+      unique: true,
+    },
+    profileImage: {
+      type: String,
+    },
     isDeleted: {
       type: Boolean,
-      default: false, // Soft deletion flag, default is false (not deleted)
+      default: false,
+    },
+    isClient: {
+      type: Boolean,
+      default: false,
     },
   },
   {
-    toJSON: {
-      virtuals: true,
-    },
+    timestamps: true,
   }
 );
 
-// Virtuals
+// Virtual
 customerSchema.virtual("fullName").get(function () {
   return `${this.name.firstName} ${
     this.name.middleName ? this.name.middleName + " " : ""
@@ -93,33 +104,31 @@ customerSchema.pre("save", async function (next) {
 
 // Post-save middleware to remove the password field from the saved document
 customerSchema.post<TCustomer>("save", async function (doc, next) {
-  doc.password = ""; // Remove the password field from the response after saving
+  doc.password = "";
   next();
 });
 
 // Pre-find middleware to automatically exclude soft-deleted users from query results
-customerSchema.pre<Query<TCustomer, TCustomer>>("find", function (next) {
-  this.find({
-    isDeleted: { $ne: true }, // Exclude users where isDeleted is true
-  });
-
-  next();
-});
+customerSchema.pre<Query<TCustomer & Document, TCustomer>>(
+  "find",
+  function (next) {
+    this.where({ isDeleted: { $ne: true } }).select("-password");
+    next();
+  }
+);
 
 // Pre-findOne middleware to automatically exclude soft-deleted users from single record queries
-customerSchema.pre("findOne", function (next) {
-  this.find({
-    isDeleted: { $ne: true }, // Exclude users where isDeleted is true
-  });
-
-  next();
-});
+customerSchema.pre<Query<TCustomer & Document, TCustomer>>(
+  "findOne",
+  function (next) {
+    this.where({ isDeleted: { $ne: true } }).select("-password");
+    next();
+  }
+);
 
 // Pre-aggregate middleware to automatically exclude soft-deleted users in aggregation queries
 customerSchema.pre("aggregate", function (next) {
-  // Add a $match stage at the start of the aggregation pipeline to exclude deleted users
   this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
-
   next();
 });
 

@@ -9,6 +9,7 @@ import config from "../../config";
 // verify OTP controller
 const verifyOTP = catchAsync(async (req: Request, res: Response) => {
   const { userId, otp } = req.body;
+
   const result = await OTPVerificationService.verifyOTP(userId, otp);
 
   //   destructuring refresh token to set cookie
@@ -32,6 +33,7 @@ const verifyOTP = catchAsync(async (req: Request, res: Response) => {
 const resendOTPVerification = catchAsync(
   async (req: Request, res: Response) => {
     const { userId, email } = req.body;
+
     const result = await OTPVerificationService.resendOTPVerification(
       userId,
       email

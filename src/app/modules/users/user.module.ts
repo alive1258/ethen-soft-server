@@ -77,9 +77,7 @@ const userSchema = new Schema<TUser, UserModel>(
   },
 
   {
-    toJSON: {
-      virtuals: true,
-    },
+    timestamps: true,
   }
 );
 

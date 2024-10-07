@@ -33,10 +33,10 @@ const createUser = catchAsync(async (req, res) => {
 
 // Controller to handle retrieving all users
 const getAllUsers = catchAsync(async (req, res) => {
-  // formating filters data as database requirment
+  // formatting filters data as database requirement
   const filtersData = pick(req.query, userFilterableFields);
 
-  // formating pagination fields with query requirment
+  // formatting pagination fields with query requirement
   const paginationOptions = pick(req.query, paginationFields);
 
   // Retrieve all users from the database

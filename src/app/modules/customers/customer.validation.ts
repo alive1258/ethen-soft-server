@@ -3,7 +3,6 @@ import { z } from "zod";
 // Zod schema for creating a Customer
 const createCustomerValidationSchema = z.object({
   body: z.object({
-    id: z.string().trim().min(1, "ID is required"),
     name: z.object({
       firstName: z.string().trim().min(1, "First name is required"),
       middleName: z.string().trim().optional(),
