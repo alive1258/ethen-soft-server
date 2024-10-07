@@ -17,4 +17,6 @@ export type TClientReviewFilters = {
   searchTerm?: string;
   service?: string;
   customer?: string;
+  serviceId?: string; // Add this
+  customerId?: string;
 };

@@ -5,7 +5,7 @@ import { BannerValidation } from "./banner.validation";
 
 const router = express.Router();
 
-// Route to create a new technology
+// Route to create a new technology☺
 router.post(
   "/create-banner",
   validateRequest(BannerValidation.createBannerValidationSchema),
