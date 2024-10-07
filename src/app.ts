@@ -10,6 +10,7 @@ const app: Application = express();
 // parsers update
 // update
 
+
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -18,6 +19,11 @@ app.use(
 );
 
 // app.use(cors());
+
+// app.use(cors());
+
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+
 
 // cookie parser for grave cookie
 app.use(cookieParser());

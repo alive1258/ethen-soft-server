@@ -2,12 +2,15 @@ import express from "express";
 import validateRequest from "../../middleware/validateRequest";
 import { PricingFeatureController } from "./pricingFeature.controller";
 import { PricingFeatureValidation } from "./pricingFeature.validation";
+import auth from "../../middleware/auth";
+import { ENUM_ROLE } from "../../../enums/user";
 
 const router = express.Router();
 
 // Route to create a new pricing feature
 router.post(
   "/",
+  auth(ENUM_ROLE.SUPER_ADMIN, ENUM_ROLE.ADMIN),
   validateRequest(
     PricingFeatureValidation.createPricingFeatureValidationSchema
   ),
@@ -23,6 +26,7 @@ router.get("/:id", PricingFeatureController.getSinglePricingFeature);
 // Route to update a pricing feature by ID
 router.patch(
   "/:id",
+  auth(ENUM_ROLE.SUPER_ADMIN, ENUM_ROLE.ADMIN),
   validateRequest(
     PricingFeatureValidation.updatePricingFeatureValidationSchema
   ),
@@ -30,6 +34,10 @@ router.patch(
 );
 
 // Route to delete a pricing feature by ID
-router.delete("/:id", PricingFeatureController.deletePricingFeature);
+router.delete(
+  "/:id",
+  auth(ENUM_ROLE.SUPER_ADMIN, ENUM_ROLE.ADMIN),
+  PricingFeatureController.deletePricingFeature
+);
 
 export const PricingFeatureRoutes = router;

@@ -4,6 +4,7 @@ import { Model, Types } from "mongoose";
 export interface TOTPVerification {
   userId: Types.ObjectId;
   otp: string;
+  email: string;
   role?: string;
   createdAt: Date;
   expiresAt: Date;

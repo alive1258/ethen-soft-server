@@ -8,16 +8,25 @@ import { TGenericResponse } from "../../../interfaces/common";
 import ApiError from "../../../errors/ApiError";
 import httpStatus from "http-status";
 import { generateUserId } from "./user.utils";
+import { ENUM_ROLE } from "../../../enums/user";
+import { Customer } from "../customers/customer.module";
 
 // Service to create a new user in the database
 const createUserIntoDB = async (userData: TUser) => {
+  //set role
+  if (userData) {
+    userData.role = ENUM_ROLE.ADMIN;
+  }
   // set initial isEmailVerified to false
   if (userData?.isEmailVerified) {
     userData.isEmailVerified = false;
   }
   // Check if a user with the given email already exists
-  if (await User.isUserExists(userData.email)) {
-    throw new ApiError(httpStatus.CONFLICT, "user already exist"); // Throw an error if the user already exists
+  if (await User.findOne({ email: userData.email })) {
+    throw new ApiError(httpStatus.CONFLICT, "User already exist");
+  }
+  if (await Customer.findOne({ email: userData.email })) {
+    throw new ApiError(httpStatus.CONFLICT, "User already exist");
   }
 
   //generate custom id
@@ -27,10 +36,7 @@ const createUserIntoDB = async (userData: TUser) => {
   userData["id"] = id;
 
   // Create a new user in the database using the provided user data
-  const result = await User.create(userData); // built in static methods
-
-  // Remove the password field from the result
-  // result.password = "";
+  const result = await User.create(userData);
 
   return result;
 };

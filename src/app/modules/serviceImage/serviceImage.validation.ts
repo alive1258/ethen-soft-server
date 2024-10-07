@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-// Zod schema for Hero
+// Zod schema for Service Image
 const createServiceImageSchema = z.object({
   body: z.object({
     title: z.string().trim().min(1, "Title is required"),
