@@ -30,6 +30,20 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// log out
+const logOut = catchAsync(async (req: Request, res: Response) => {
+  // Delete the refreshToken cookie
+  res.clearCookie("refreshToken", { path: "/" });
+
+  // Send response back to the client
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Logged out successfully.",
+    data: null,
+  });
+});
+
 // refresh token controller function
 const refreshToken = catchAsync(async (req: Request, res: Response) => {
   // destructuring refreshToken from cookies
@@ -89,6 +103,7 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
 // export auth controllers in object
 export const AuthController = {
   loginUser,
+  logOut,
   refreshToken,
   forgetPassword,
   resetPassword,
