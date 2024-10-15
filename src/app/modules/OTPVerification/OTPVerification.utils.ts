@@ -3,8 +3,8 @@ import config from "../../config";
 
 // created a transporter to transport mail by the help of nodemailer
 export const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
+  host: "mail.asianitinc.com",
+  port: 465,
   secure: false,
   auth: {
     user: config.auth_email,
