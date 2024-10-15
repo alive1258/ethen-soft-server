@@ -13,6 +13,7 @@ router.post(
   validateRequest(AuthValidation.userLoginZodSchema),
   AuthController.loginUser
 );
+router.post("/log-out", AuthController.logOut);
 // refresh token route
 router.post("/refresh-token", AuthController.refreshToken);
 
