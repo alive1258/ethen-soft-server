@@ -3,7 +3,7 @@ import config from "../../config";
 
 // created a transporter to transport mail by the help of nodemailer
 export const transporter = nodemailer.createTransport({
-  host: "mail.asianitinc.com",
+  host: "mail.codexweaver.com",
   port: 465,
   secure: false,
   auth: {
