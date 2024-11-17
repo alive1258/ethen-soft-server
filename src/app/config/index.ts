@@ -20,4 +20,6 @@ export default {
   auth_email: process.env.AUTH_EMAIL,
   auth_password: process.env.AUTH_PASSWORD,
   email_expired_time: process.env.EMAIL_EXPIRED_TIME,
+  mail_host: process.env.MAIL_HOST,
+  mail_port: process.env.MAIL_PORT,
 };
