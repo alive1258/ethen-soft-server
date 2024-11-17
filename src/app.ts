@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 
 const app: Application = express();
 
-// everythis update now
+
 
 app.use(
   cors({
