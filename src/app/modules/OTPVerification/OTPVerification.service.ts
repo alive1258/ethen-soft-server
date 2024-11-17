@@ -20,7 +20,7 @@ const sendOTPVerificationEmail = async (_id: Types.ObjectId, email: string) => {
 
     // make a mail structure
     const mailOptions = {
-      from: "",
+      from: config.auth_email,
       to: email,
       subject: "Verify Your Email.",
       html: `<h2>He, This message from <b> Ethen Soft</b>.</h2> 
