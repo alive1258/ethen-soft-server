@@ -11,7 +11,8 @@ const app: Application = express();
 
 app.use(
   cors({
-    origin: "https://ethensoft.com/",
+    // origin: "https://ethensoft.com",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
