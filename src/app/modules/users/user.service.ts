@@ -112,6 +112,12 @@ const getAllUsersFromDB = async (
 
 // Service to retrieve a single user from the database by ID
 const getSingleUserFromDB = async (_id: string) => {
+  if (!_id) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "You have must have to provide the ID"
+    );
+  }
   const result = await User.findOne({ _id });
   // Use Mongoose's aggregate method to match a user by ID
   // const result = await User.aggregate([{ $match: { _id: _id } }]);

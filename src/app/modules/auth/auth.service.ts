@@ -14,6 +14,7 @@ import { jwtHelpers } from "../../../helpers/jwtHelpers";
 import { TUser } from "../users/user.interface";
 import { Customer } from "../customers/customer.module";
 import { OTPVerificationService } from "../OTPVerification/OTPVerification.service";
+import { OTPVerification } from "../OTPVerification/OTPVerification.model";
 
 // Service to handle user login
 const loginUserService = async (
@@ -21,11 +22,12 @@ const loginUserService = async (
 ): Promise<TLoginUserResponse> => {
   // Destructure email and password from the login data
   const { email, password } = loginData;
+  console.error(loginData);
 
   // Find the user by email in both Customer and User collections
   const customerData = await Customer.findOne(
     { email },
-    { _id: 1, email: 1, password: 1, role: 1 }
+    { _id: 1, email: 1, password: 1, role: 1, isEmailVerified: 1 }
   ).lean();
 
   const userData =
@@ -47,6 +49,7 @@ const loginUserService = async (
   }
 
   // Throw an error if email is not verified.
+  console.log(userData);
   if (!userData?.isEmailVerified) {
     throw new ApiError(httpStatus.UNAUTHORIZED, "Email is not verified!");
   }
@@ -142,6 +145,9 @@ const forgetPasswordService = async (email: string) => {
   if (!userData) {
     throw new ApiError(httpStatus.NOT_FOUND, "User does not exist.");
   }
+
+  await OTPVerification.deleteMany({ userId: userData?._id });
+
   const result = await OTPVerificationService.sendOTPVerificationEmail(
     userData?._id,
     userData?.email
