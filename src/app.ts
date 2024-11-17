@@ -7,12 +7,11 @@ import cookieParser from "cookie-parser";
 
 const app: Application = express();
 
-// parsers update
-// update
+
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://ethensoft.com/",
     credentials: true,
   })
 );

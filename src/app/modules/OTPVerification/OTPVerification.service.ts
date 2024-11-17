@@ -26,7 +26,7 @@ const sendOTPVerificationEmail = async (_id: Types.ObjectId, email: string) => {
       html: `<h2>He, This message from <b> Ethen Soft</b>.</h2> 
         <p> Please enter <b> ${otp} </b> in the app to verify your email address and complete the registration.<p>
         <p> Have a nice journey with <b> Ethen Soft</b> </p>
-        <p> This code <b> expires in 1 hour</b>. </p>`,
+        <p> This code <b> expires in 1 minute</b>. </p>`,
     };
 
     // hashing otp
