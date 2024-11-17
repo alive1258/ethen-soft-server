@@ -79,8 +79,6 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
   const user = req.user;
   const { newPassword } = req.body;
 
-  console.log(user);
-
   const result = await AuthService.resetPasswordService(user, newPassword);
 
   //   destructuring refresh token to set cookie
