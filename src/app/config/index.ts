@@ -14,6 +14,12 @@ export default {
     expires_in: process.env.JWT_EXPIRES_IN,
     refresh_expires_in: process.env.JWT_REFRESH_EXPIRE_IN,
   },
+  ssl: {
+    store_id: process.env.STORE_ID,
+    store_password: process.env.STORE_PASSWORD,
+    is_live: process.env.IS_LIVE,
+    payment_url: process.env.SSL_PAYMENT_URL,
+  },
   mail_host: process.env.MAIL_HOST,
   mail_secure: process.env.MAIL_SECURE === "true" ? true : false,
   mail_port: Number(process.env.MAIL_PORT),

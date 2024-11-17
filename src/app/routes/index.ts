@@ -35,6 +35,7 @@ import { ClientReviewRoutes } from "../modules/clientReview/clientReview.route";
 import { FeatureAssignedPricingRoutes } from "../modules/FeatureAssignedPricing/FeatureAssignedPricing.route";
 import { RefundPolicyRoutes } from "../modules/refundPolicy/refundPolicy.route";
 import { ContactUsRoutes } from "../modules/contactUs/contactUs.route";
+import { PaymentRoutes } from "../modules/payments/payment.route";
 
 const router = Router();
 
@@ -184,6 +185,10 @@ const moduleRoutes = [
   {
     path: "/contact-us",
     router: ContactUsRoutes,
+  },
+  {
+    path: "/payments",
+    router: PaymentRoutes,
   },
 ];
 
