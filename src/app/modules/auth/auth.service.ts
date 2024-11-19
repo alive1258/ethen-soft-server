@@ -49,7 +49,7 @@ const loginUserService = async (
   }
 
   // Throw an error if email is not verified.
-  console.log(userData);
+
   if (!userData?.isEmailVerified) {
     throw new ApiError(httpStatus.UNAUTHORIZED, "Email is not verified!");
   }
