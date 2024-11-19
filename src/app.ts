@@ -7,11 +7,9 @@ import cookieParser from "cookie-parser";
 
 const app: Application = express();
 
-
-
 app.use(
   cors({
-    // origin: "https://ethensoft.com",
+
     origin: "http://localhost:3000",
     credentials: true,
   })
@@ -24,7 +22,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //application router
-
 app.use("/api/v1", router);
 
 const getAController = (req: Request, res: Response) => {

@@ -6,7 +6,7 @@ const { ObjectId } = mongoose.Schema.Types;
 const paymentSchema = new Schema<TPayment, PaymentModel>(
   {
     service: {
-      type: ObjectId,
+      type: String,
       ref: "Pricing",
     },
     totalAmount: {
@@ -24,9 +24,14 @@ const paymentSchema = new Schema<TPayment, PaymentModel>(
     },
 
     user: {
-      type: ObjectId,
+      type: String,
       required: true,
       ref: "Customer",
+    },
+    pricing: {
+      type: String,
+      required: true,
+      ref: "Pricing",
     },
   },
   {
