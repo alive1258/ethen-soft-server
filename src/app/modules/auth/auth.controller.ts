@@ -9,6 +9,7 @@ import httpStatus from "http-status";
 // login controller  function
 const loginUser = catchAsync(async (req: Request, res: Response) => {
   const loginData = req.body;
+
   const result = await AuthService.loginUserService(loginData);
 
   //   destructuring refresh token to set cookie
