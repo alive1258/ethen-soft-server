@@ -3,50 +3,56 @@ import axios from "axios";
 import config from "../../config";
 import { Payment } from "./payment.model";
 import { TPaginationOptions } from "../../../interfaces/pagination";
-import { TPayment, TPaymentFilters } from "./payment.interface";
+import { IOrder, TPayment, TPaymentFilters } from "./payment.interface";
 import { TGenericResponse } from "../../../interfaces/common";
 import { paginationHelpers } from "../../../helpers/paginationHelpers";
 import { SortOrder } from "mongoose";
 import { paymentSearchableFields } from "./payment.constant";
+import { Customer } from "../customers/customer.module";
+import ApiError from "../../../errors/ApiError";
+import httpStatus from "http-status";
 
 // create order
-const paymentCreate = async (order: any) => {
-  const tran_id = "string";
+const paymentCreate = async (order: IOrder) => {
+  const tran_id = `tran_${Date.now()}`;
+
+  const customer = await Customer.findOne({ _id: order.userId });
+
+  if (!customer) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Customer does not found!");
+  }
 
   // create data for payment ssl
   const data = {
     store_id: config.ssl.store_id,
     store_passwd: config.ssl.store_password,
     total_amount: order?.totalAmount,
-    currency: "BDT",
+    currency: order?.currency,
     tran_id: tran_id,
     success_url: `${config.production_url}/payments/success/${tran_id}`,
     fail_url: `${config.production_url}/payments/fail`,
     cancel_url: `${config.production_url}/payments/cancel`,
     ipn_url: `${config.production_url}/payments/ipn`,
     shipping_method: "Courier",
-    product_name: "Computer.",
-    product_category: "Electronic",
-    product_profile: "general",
-    cus_name: `${order?.firstName}${order?.lastName}`,
-    cus_email: order?.email,
-    cus_add1: order?.address,
-    cus_add2: "Dhaka",
-    cus_city: order?.town,
-    cus_state: order?.state,
-    cus_postcode: order?.postOrZipCode,
-    cus_country: "Bangladesh",
-    cus_phone: order?.contactNumber,
+    product_name: order.serviceId,
+    cus_name: `${customer?.name}`,
+    cus_email: customer?.email,
+    cus_add1: order.address,
+    cus_city: order?.city,
+    cus_country: order?.country,
   };
 
+  // Order data to save in database
   const orderData = {
     totalAmount: order?.totalAmount,
-    user: order?.user,
-    service: order?.service,
+    user: customer._id,
+    service: order?.serviceId,
+    pricing: order?.pricingId,
     paidStatus: "PENDING",
     transactionId: tran_id,
   };
 
+  // Send request to SSLCommerz API
   const response = await axios({
     method: "POST",
     url: config.ssl.payment_url,
@@ -57,6 +63,7 @@ const paymentCreate = async (order: any) => {
   // save data to database
   await Payment.create(orderData);
 
+  // Redirect to the payment gateway URL
   return response.data?.redirectGatewayURL;
 };
 
