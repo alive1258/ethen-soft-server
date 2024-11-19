@@ -9,6 +9,7 @@ import httpStatus from "http-status";
 // login controller  function
 const loginUser = catchAsync(async (req: Request, res: Response) => {
   const loginData = req.body;
+
   const result = await AuthService.loginUserService(loginData);
 
   //   destructuring refresh token to set cookie
@@ -78,8 +79,6 @@ const forgetPassword = catchAsync(async (req: Request, res: Response) => {
 const resetPassword = catchAsync(async (req: Request, res: Response) => {
   const user = req.user;
   const { newPassword } = req.body;
-
-  console.log(user);
 
   const result = await AuthService.resetPasswordService(user, newPassword);
 
