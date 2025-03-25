@@ -58,22 +58,12 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
 
   const result = await AuthService.resetPasswordService(user, newPassword);
 
-  //   destructuring refresh token to set cookie
-  const { refreshToken, ...others } = result;
-  // set refresh token into cookie
-  const cookieOptions = {
-    secure: config.env === "production",
-    httpOnly: true,
-  };
-
-  res.cookie("refreshToken", refreshToken, cookieOptions);
-
   // pass data to frontend
   sendResponse<TLoginUserResponse>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "Password reset in successful.",
-    data: others,
+    data: result,
   });
 });
 
