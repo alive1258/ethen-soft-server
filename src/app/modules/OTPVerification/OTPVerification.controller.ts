@@ -12,22 +12,12 @@ const verifyOTP = catchAsync(async (req: Request, res: Response) => {
 
   const result = await OTPVerificationService.verifyOTP(userId, otp);
 
-  //   destructuring refresh token to set cookie
-  const { refreshToken, ...others } = result;
-  // set refresh token into cookie
-  const cookieOptions = {
-    secure: config.env === "production",
-    httpOnly: true,
-  };
-
-  res.cookie("refreshToken", refreshToken, cookieOptions);
-
   // pass data to frontend
   sendResponse<TLoginUserResponse>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "User logged in successfully.",
-    data: others,
+    data: result,
   });
 });
 const resendOTPVerification = catchAsync(
