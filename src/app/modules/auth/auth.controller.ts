@@ -11,36 +11,12 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
   const loginData = req.body;
   const result = await AuthService.loginUserService(loginData);
 
-  //   destructuring refresh token to set cookie
-  const { refreshToken, ...others } = result;
-  // set refresh token into cookie
-  const cookieOptions = {
-    secure: config.env === "production",
-    httpOnly: true,
-  };
-
-  res.cookie("refreshToken", refreshToken, cookieOptions);
-
   // pass data to frontend
   sendResponse<TLoginUserResponse>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "User logged in successfully.",
-    data: others,
-  });
-});
-
-// log out
-const logOut = catchAsync(async (req: Request, res: Response) => {
-  // Delete the refreshToken cookie
-  res.clearCookie("refreshToken", { path: "/" });
-
-  // Send response back to the client
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Logged out successfully.",
-    data: null,
+    data: result,
   });
 });
 
@@ -103,7 +79,6 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
 // export auth controllers in object
 export const AuthController = {
   loginUser,
-  logOut,
   refreshToken,
   forgetPassword,
   resetPassword,
