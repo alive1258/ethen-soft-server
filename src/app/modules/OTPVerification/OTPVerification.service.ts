@@ -45,7 +45,7 @@ const sendOTPVerificationEmail = async (_id: Types.ObjectId, email: string) => {
     const newOTPVerification = await OTPVerification.create(data);
 
     // send mail with the help of nodemailer transporter
-    await transporter.sendMail(mailOptions);
+    const va = await transporter.sendMail(mailOptions);
 
     return newOTPVerification;
   } catch (error: any) {
